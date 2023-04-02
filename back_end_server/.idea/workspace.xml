@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5b314e-bc68-4e5b-b596-9d7cc5e70cc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/back_end_server.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shop/Basket_item.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/Basket.py" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/Basket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shop/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
