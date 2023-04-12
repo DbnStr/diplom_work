@@ -24,4 +24,4 @@ def get_basket(basket_id):
         print("No user_id in request")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5002, host="194.87.99.230")

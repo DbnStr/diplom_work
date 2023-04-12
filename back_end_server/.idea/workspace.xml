@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5b314e-bc68-4e5b-b596-9d7cc5e70cc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Constants.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Retrofit/RetrofitClient.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Retrofit/RetrofitServices.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Basket.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/BasketItem.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/res/anim/scanner_animation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shop/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/res/xml/network_security_config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobileApp/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Constants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/MainActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
