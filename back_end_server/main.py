@@ -13,6 +13,8 @@ def post_new_basket():
     payment_link = "http://127.0.0.1:5002/baskets/" + str(data["id"])
     response_body = {"payment_link": payment_link}
 
+    print("success payment_link request")
+
     return Response(json.dumps(response_body), status=200, mimetype='application/json')
 
 @app.route("/baskets/<string:basket_id>", methods=['GET'])
