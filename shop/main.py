@@ -11,7 +11,7 @@ items = [Basket_item("Coca-cola, 1.5l", 1, 100, 100), Basket_item("Orbit", 1, 50
 item = Basket_item("Coca-cola, 1.5l", 1, 100, 100)
 basket = Basket(1, items)
 
-r = requests.post("http://127.0.0.1:5002/baskets", json=basket.toJson())
+r = requests.post("http://194.87.99.230:5002/baskets", json=basket.toJson())
 response_body = json.JSONDecoder().decode(r.text)
 print(response_body)
 
