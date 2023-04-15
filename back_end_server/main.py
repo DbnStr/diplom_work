@@ -21,7 +21,7 @@ def post_new_basket():
 def get_basket(basket_id):
     queries = request.args.to_dict()
     if queries.get('user_id'):
-        return Response(json_basket, status=200, mimetype='application/json')
+        return Response(json.JSONEncoder().encode("{id: 1}"), status=200, mimetype='application/json')
     else:
         print("No user_id in request")
 

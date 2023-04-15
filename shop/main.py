@@ -13,6 +13,7 @@ basket = Basket(1, items)
 
 r = requests.post("http://194.87.99.230:5002/baskets", json=basket.toJson())
 response_body = json.JSONDecoder().decode(r.text)
+
 print(response_body)
 
 @app.route("/")
