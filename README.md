@@ -7,6 +7,10 @@
 
 brew install postgresql - если не запускается.
 
+Если на debian пишет ошибку: psql: error: FATAL:  role "root" does not exist. То нужно делать следующее:
+
+sudo -u postgres createuser -s root
+
 ### Создание пользователя, у которого будет бд сервиса, и базы данных сервиса 
 
 psql postgres - Заходим в postgresql под дефолтным пользователем
