@@ -1,7 +1,12 @@
 # diplom_work
 Пичугин Алексей ИУ9-81Б. Дипломная работа 
 
+## Работа с PostgreSql
 
+Если ошибка запуска сервера PostgreSql - sudo systemctl start postgres
+
+
+## Структура данных
 Структура корзины:
 ```
 {
