@@ -21,8 +21,6 @@ psql -U pichugin_iu9 postgres - заходим под новым логином,
 
 create database diplom_work; - создаём базу данных сервиса
 
-Зайти в BD для редактирования настроек ролей: psql postgres. postgres - мейн владелец.
-
 ## Структура данных
 Структура корзины:
 ```
