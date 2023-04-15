@@ -46,18 +46,18 @@ class MainActivity : AppCompatActivity() {
         myService = Common.retrofitService
         getBasket()
 
-//        if (ContextCompat.checkSelfPermission(
-//                this@MainActivity, android.Manifest.permission.CAMERA
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            askForCameraPermission()
-//        } else {
-//            setupControls()
-//        }
-//
-//        val aniSlide: Animation =
-//            AnimationUtils.loadAnimation(this@MainActivity, R.anim.scanner_animation)
-//        binding.barcodeLine.startAnimation(aniSlide)
+        if (ContextCompat.checkSelfPermission(
+                this@MainActivity, android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            askForCameraPermission()
+        } else {
+            setupControls()
+        }
+
+        val aniSlide: Animation =
+            AnimationUtils.loadAnimation(this@MainActivity, R.anim.scanner_animation)
+        binding.barcodeLine.startAnimation(aniSlide)
     }
 
     private fun getBasket() {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<Basket>, response: Response<Basket>) {
-                Log.d("getBasketHttpRequest", "Success")
+                Log.d("getBasketHttpRequest", "Success" + response.body())
             }
         })
     }

@@ -7,5 +7,6 @@ class Basket_item:
         self.quantity = quantity
         self.one_item_cost  = one_item_cost
         self.amount = amount
+
     def toJson(self):
         return json.dumps(self.__dict__)
