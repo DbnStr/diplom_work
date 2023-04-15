@@ -3,8 +3,9 @@
 
 ## Работа с PostgreSql
 
-Если ошибка запуска сервера PostgreSql - sudo systemctl start postgres
-
+Запуск postgresql: pg_ctl -D /opt/homebrew/var/postgresql@14 start
+brew install postgresql - если не запускается
+Зайти в BD для редактирования настроек ролей: psql postgres. postgres - мейн владелец.
 
 ## Структура данных
 Структура корзины:
