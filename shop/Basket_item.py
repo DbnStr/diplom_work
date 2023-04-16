@@ -2,10 +2,10 @@ import json
 
 
 class Basket_item:
-    def __init__(self, name, quantity, one_item_cost, amount):
+    def __init__(self, name, quantity, oneItemCost, amount):
         self.name = name
         self.quantity = quantity
-        self.one_item_cost  = one_item_cost
+        self.oneItemCost  = oneItemCost
         self.amount = amount
 
     def toJson(self):

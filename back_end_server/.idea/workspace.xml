@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5b314e-bc68-4e5b-b596-9d7cc5e70cc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/init_db.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shop/Constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ER_диаграмма_БД.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ER_диаграмма_БД.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Basket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Basket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/Basket.py" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/Basket.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../shop/Basket_item.py" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/Basket_item.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shop/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../shop/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
