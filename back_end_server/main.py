@@ -58,7 +58,8 @@ def get_basket(basket_id):
         resp = {
             "id": basket[0],
             "idInShop": basket[1],
-            "shopId": basket[2]
+            "shopId": basket[2],
+            "items": resp_items
         }
         return Response(json.dumps(resp), status=200, mimetype='application/json')
     else:
