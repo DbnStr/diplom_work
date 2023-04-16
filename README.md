@@ -11,6 +11,8 @@ brew install postgresql - если не запускается.
 
 sudo -u postgres createuser -s root
 
+\c database_name - Зайти в базу database_name, после этого можно посмотреть какие таблицы в ней лежат
+
 ### Создание пользователя, у которого будет бд сервиса, и базы данных сервиса 
 
 psql postgres - Заходим в postgresql под дефолтным пользователем
