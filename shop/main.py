@@ -14,7 +14,7 @@ def hello_world():
     items = [Basket_item("Coca-cola, 1.5l", 1, 100, 100), Basket_item("Orbit", 1, 50, 50)]
     basket = Basket(1, 1, items)
 
-    r = requests.post(LOCAL_URL + "/baskets", json=basket.toJson())
+    r = requests.post(REMOTE_URL     + "/baskets", json=basket.toJson())
     response_body = json.JSONDecoder().decode(r.text)
 
     print(response_body)

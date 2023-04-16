@@ -44,8 +44,8 @@ def save_basket_to_database(basket_from_request):
 def get_basket(basket_id):
     queries = request.args.to_dict()
     if queries.get('user_id'):
-        basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id == {}".format(basket_id))
-        items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId == {}".format(basket_id))
+        basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basket_id))
+        items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId = {}".format(basket_id))
 
         resp_items = []
         for i in items:
