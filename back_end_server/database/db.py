@@ -1,7 +1,14 @@
 import psycopg2
 from typing import Union, Tuple
 
-db_config = {
+remote_db_config = {
+    'dbname': 'diplom_work',
+    'user': 'postgres',
+    'password': '123',
+    'host': 'localhost'
+}
+
+local_db_config = {
     'dbname': 'diplom_work',
     'user': 'pichugin_iu9',
     'password': 'IU9_one_love',
@@ -9,7 +16,7 @@ db_config = {
 }
 
 def get_db_connection():
-    conn = psycopg2.connect(**db_config)
+    conn = psycopg2.connect(**remote_db_config)
     return conn
 
 def execute_select_one_query(query: str):
