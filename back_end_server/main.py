@@ -50,7 +50,7 @@ def get_basket(basket_id):
             resp_items = []
             for item_in_basket in items_in_basket:
                 print(item_in_basket[4])
-                item = db.execute_select_one_query("SELECT * FROM Item WHERE id = ".format(item_in_basket[4]))
+                item = db.execute_select_one_query("SELECT * FROM Item WHERE id = {}".format(item_in_basket[4]))
                 resp_items.append({
                     "itemId": item[0],
                     "name": item[1],
