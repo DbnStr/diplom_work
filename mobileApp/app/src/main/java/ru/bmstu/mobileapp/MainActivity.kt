@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getBasket() {
-        myService.getBasket("1", "1").enqueue(object : Callback<Basket> {
+        myService.getBasket(1, 1).enqueue(object : Callback<Basket> {
             override fun onFailure(call: Call<Basket>, t: Throwable) {
                 Log.d("getBasketHttpRequest", "Failure" + t.toString())
             }

@@ -71,7 +71,7 @@ def get_basket(basket_id):
         print("No user_id in request")
 
 def user_exists(consumerId: int):
-    return not db.execute_select_one_query("SELECT Consumer WHERE id = {}".format(consumerId)) is None
+    return not db.execute_select_one_query("SELECT * FROM Consumer WHERE id = {}".format(consumerId)) is None
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002, host=REMOTE_HOST)
