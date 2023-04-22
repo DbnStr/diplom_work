@@ -7,7 +7,9 @@ def create_all_tables():
         "DROP TABLE IF EXISTS Consumer;",
         """
             CREATE TABLE IF NOT EXISTS Consumer (
-                id SERIAL PRIMARY KEY NOT NULL)
+                id SERIAL PRIMARY KEY NOT NULL,
+                name VARCHAR(100) NOT NULL,
+                surname VARCHAR(100) NOT NULL)
         """,
 
         #Создание таблицы со всеми магазинами (Shop)
@@ -18,14 +20,24 @@ def create_all_tables():
                 name VARCHAR(100) NOT NULL)
         """,
 
+        # Создание таблицы Пользователей внутри магазинов (ConsumerInShop)
+        "DROP TABLE IF EXISTS ConsumerInShop CASCADE;",
+        """
+            CREATE TABLE IF NOT EXISTS ConsumerInShop (
+                id SERIAL PRIMARY KEY NOT NULL,
+                loyaltyId INT NOT NULL,
+                consumerId INT NOT NULL REFERENCES Consumer (id),
+                shopId INT NOT NULL REFERENCES Shop(id))
+        """
+
         #Создание таблицы корзин (Basket)
         "DROP TABLE IF EXISTS Basket CASCADE;",
         """
             CREATE TABLE IF NOT EXISTS Basket (
                 id SERIAL PRIMARY KEY NOT NULL,
                 idInShop INT NOT NULL,
-                shopId INT NOT NULL,
-                consumerId INT NULL)
+                shopId INT NOT NULL REFERENCES Shop (id),
+                consumerId INT NULL REFERENCES Consumer (id))
         """,
 
         # Создание таблицы Товаров - справочник товаров (Item)
@@ -64,10 +76,17 @@ def fill_items():
     for i in items:
         insert("Item", i)
 
-def insert_consumer():
-    insert("Consumer", {})
+def fill_consumers():
+    insert("Consumer", {"name": "Alexey", "surName": "Pichugin"})
+
+def fill_shops():
+    insert("Shop", {"name": "Pyaterochka"})
+
+def fill_consumers_in_shops():
+    insert("ConsumerIdShop", {"loyaltyId": 123, "consumerId": 1, "shopId": 1})
 
 if __name__ == "__main__":
     create_all_tables()
+    fill_consumers()
+    fill_shops()
     fill_items()
-    insert_consumer()
