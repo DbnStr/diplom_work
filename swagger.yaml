@@ -1,0 +1,151 @@
+openapi: 3.0.3
+info:
+  title: Swagger для Дипломной Работы
+  description: |-
+    Это Swagger для Дипломной работы Пичугина Алексей, группа ИУ9-81Б.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://194.87.99.230:5002
+tags:
+  - name: basket
+    description: Все методы для взаимодействия с корзиной на стороне Back_End_Server
+paths:
+  /baskets:
+    post:
+      tags:
+        - basket
+      summary: Добавить новую корзину
+      description: Данный метод используется магазином для добавления новой корзины
+      operationId: createBasket
+      requestBody:
+        description: Добавление новой корзины
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BasketInRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paymentLink:
+                    type: string
+                    format: string
+                    example: "194.87.99.230:5002/baskets/1"
+  /baskets/{basketId}:
+    get:
+      tags:
+        - basket
+      summary: Получить содержимое корзины по basketId
+      description: Данный метод используется покупателем для получения содержимого корзины
+      operationId: getPetById
+      parameters:
+        - name: basketId
+          in: path
+          description: Идентификатор корзины
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: consumerId
+          in: query
+          description: Идентификатор Покупателя
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasketInResponse'          
+
+components:
+  schemas:
+    BasketInRequest:
+      type: object
+      properties:
+        idInShop:
+          type: integer
+          format: int64
+          example: 1
+        shopId:
+          type: integer
+          format: int64
+          example: 12
+        items:
+          type: array
+          items: 
+            $ref: '#/components/schemas/itemInBasketRequest'
+    itemInBasketRequest:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          example: 12
+        amount:
+          type: number
+          format: float
+          example: 1200
+        itemId:
+          type: integer
+          format: int64
+          example: 1
+    BasketInResponse:
+      type: object
+      properties:
+        id:
+            type: integer
+            format: int64
+            example: 1
+        idInShop:
+          type: integer
+          format: int64
+          example: 112
+        shopId:
+          type: integer
+          format: int64
+          example: 12
+        items:
+          type: array
+          items: 
+            $ref: '#/components/schemas/itemInBasketResponse'
+    itemInBasketResponse:
+      type: object
+      properties:
+        itemId:
+            type: integer
+            format: int64
+            example: 1
+        name:
+          type: string
+          format: string
+          example: "Coca Cola 0.5"
+        oneItemCost:
+          type: number
+          format: float
+          example: 100
+        quantity:
+          type: integer
+          format: int64
+          example: 12
+        amount:
+          type: number
+          format: float
+          example: 1200

@@ -13,8 +13,8 @@ def post_new_basket():
     basket_from_shop = json.JSONDecoder().decode(request.json)
     basket_id = save_basket_to_database(basket_from_shop)
 
-    payment_link = "http://127.0.0.1:5002/baskets/" + str(basket_id)
-    response_body = {"payment_link": payment_link}
+    payment_link = REMOTE_ADDRESS + "/baskets/" + str(basket_id)
+    response_body = {"paymentLink": payment_link}
 
     print("success payment_link request")
 
@@ -32,11 +32,10 @@ def save_basket_to_database(basket_from_request):
     for el in basket_from_request["items"]:
         db.insert("Item",
                   {
-                      "name": el["name"],
                       "quantity": el["quantity"],
-                      "oneItemCost": el["oneItemCost"],
                       "amount": el["amount"],
-                      "basketId": basket_id
+                      "basketId": basket_id,
+                      "itemId": el["itemId"]
                   })
     return basket_id
 

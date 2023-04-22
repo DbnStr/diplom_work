@@ -31,38 +31,12 @@ def execute_select_all_query(query: str):
         entry = cursor.fetchall()
         return entry
 
-def create_all_tables():
+def execute_many_queries_without_response(queries):
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
-            #Создание таблицы со всеми магазинами (Shop)
-            cursor.execute("DROP TABLE IF EXISTS Shop;")
-            cursor.execute("""
-                                CREATE TABLE IF NOT EXISTS Shop (
-                                    id SERIAL PRIMARY KEY NOT NULL,
-                                    name VARCHAR(100) NOT NULL)
-                                """)
-
-            #Создание таблицы корзин (Basket)
-            cursor.execute("DROP TABLE IF EXISTS Basket CASCADE;")
-            cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS Basket (
-                        id SERIAL PRIMARY KEY NOT NULL,
-                        idInShop INT NOT NULL,
-                        shopId INT NOT NULL)
-                    """)
-
-            #Создание таблицы Итемов (Item)
-            cursor.execute("DROP TABLE IF EXISTS Item CASCADE;")
-            cursor.execute("""
-                            CREATE TABLE IF NOT EXISTS Item (
-                                id SERIAL PRIMARY KEY NOT NULL,
-                                name VARCHAR(100) NOT NULL,
-                                quantity INT NOT NULL,
-                                oneItemCost FLOAT4 NOT NULL,
-                                amount FLOAT4 NOT NULL,
-                                basketId INT NOT NULL REFERENCES Basket (id))
-                            """)
+            for query in queries:
+                cursor.execute(query)
         conn.commit()
         cursor.close()
         conn.close()

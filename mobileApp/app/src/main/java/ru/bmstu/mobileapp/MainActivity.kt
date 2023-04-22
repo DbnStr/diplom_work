@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<Basket>, response: Response<Basket>) {
-                Log.d("getBasketHttpRequest", "Success" + response.body())
+                Log.d("getBasketHttpRequest", "Success " + response.body())
             }
         })
     }
