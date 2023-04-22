@@ -60,6 +60,20 @@ def insert(table_name: str, entry: dict):
         return False
     return True
 
+def update_one_record(table_name: str, fields: dict, condition: str):
+    sets = ', '.join([k + " = " + fields[k] for k in fields.keys()])
+    query = 'UPDATE {} SET {} WHERE {}'.format(table_name, sets, condition)
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query)
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(e)
+        return False
+    return True
+
 def insert_one_entry_and_return_inserted_id(table_name: str, entry: dict):
     column_names = ', '.join([k for k in entry.keys()])
     values = ', '.join('%s' for _ in entry.keys())

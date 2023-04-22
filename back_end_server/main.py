@@ -42,28 +42,33 @@ def save_basket_to_database(basket_from_request):
 @app.route("/baskets/<string:basket_id>", methods=['GET'])
 def get_basket(basket_id):
     queries = request.args.to_dict()
-    #Переделать!!!!
-    # if queries.get('user_id'):
-    #     basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basket_id))
-    #     items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId = {}".format(basket_id))
-    #
-    #     resp_items = []
-    #     for i in items:
-    #         resp_items.append({
-    #             "name": i[1],
-    #             "quantity": i[2],
-    #             "oneItemCost": i[3],
-    #             "amount": i[4]
-    #         })
-    #     resp = {
-    #         "id": basket[0],
-    #         "idInShop": basket[1],
-    #         "shopId": basket[2],
-    #         "items": resp_items
-    #     }
-    #     return Response(json.dumps(resp), status=200, mimetype='application/json')
-    # else:
-    #     print("No user_id in request")
+    consumerId = int(queries.get('consumerId'))
+    if consumerId != 'None':
+        if user_exists(consumerId):
+            basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basket_id))
+            items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId = {}".format(basket_id))
+            resp_items = []
+            for i in items:
+                resp_items.append({
+                    "name": i[1],
+                    "quantity": i[2],
+                    "oneItemCost": i[3],
+                    "amount": i[4]
+                })
+            resp = {
+                "id": basket[0],
+                "idInShop": basket[1],
+                "shopId": basket[2],
+                "items": resp_items
+            }
+            db.update_one_record('Basket', {"consumerId": consumerId}, "consumerId = ".format(consumerId))
+            return Response(json.dumps(resp), status=200, mimetype='application/json')
+        else: print("User with consumerId = {} doesn't exist".format(consumerId))
+    else:
+        print("No user_id in request")
+
+def user_exists(consumerId: int):
+    return not db.execute_select_one_query("SELECT Consumer WHERE id = {}".format(consumerId)) is None
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002, host=REMOTE_HOST)
