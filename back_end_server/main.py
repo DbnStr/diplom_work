@@ -64,7 +64,7 @@ def get_basket(basket_id):
                 "consumerId": basket[3],
                 "items": resp_items
             }
-            db.update_one_record('Basket', {"consumerId": consumerId}, "consumerId = ".format(consumerId))
+            db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basket[0]))
             return Response(json.dumps(resp), status=200, mimetype='application/json')
         else: print("User with consumerId = {} doesn't exist".format(consumerId))
     else:

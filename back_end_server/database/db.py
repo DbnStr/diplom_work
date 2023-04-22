@@ -61,7 +61,8 @@ def insert(table_name: str, entry: dict):
     return True
 
 def update_one_record(table_name: str, fields: dict, condition: str):
-    sets = ', '.join([k + " = " + '%s' for k in fields.keys()])
+    sets = ', '.join([k + ' = %s' for k in fields.keys()])
+    print(sets)
     query = 'UPDATE {} SET {} WHERE {}'.format(table_name, sets, condition)
     conn = get_db_connection()
     try:
