@@ -66,7 +66,7 @@ def update_one_record(table_name: str, fields: dict, condition: str):
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
-            cursor.execute(query, fields.values())
+            cursor.execute(query, list(fields.values()))
         conn.commit()
     except Exception as e:
         conn.rollback()
