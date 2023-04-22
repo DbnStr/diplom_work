@@ -44,7 +44,7 @@ def create_all_tables():
                 id SERIAL PRIMARY KEY NOT NULL,
                 quantity INT NOT NULL,
                 amount FLOAT4 NOT NULL,
-                basketId INT NOT NULL REFERENCES Basket (id)
+                basketId INT NOT NULL REFERENCES Basket (id),
                 itemId INT NOT NULL REFERENCES Item (id))
         """]
     execute_many_queries_without_response(queries)
