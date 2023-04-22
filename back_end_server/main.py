@@ -46,19 +46,22 @@ def get_basket(basket_id):
     if consumerId != 'None':
         if user_exists(consumerId):
             basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basket_id))
-            items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId = {}".format(basket_id))
+            items_in_basket = db.execute_select_all_query("SELECT * FROM ItemInBasket WHERE basketId = {}".format(basket_id))
             resp_items = []
-            for i in items:
+            for item_in_basket in items_in_basket:
+                item = db.execute_select_one_query("SELECT * FROM Item WHERE id = ".format(item_in_basket[4]))
                 resp_items.append({
-                    "name": i[1],
-                    "quantity": i[2],
-                    "oneItemCost": i[3],
-                    "amount": i[4]
+                    "itemId": item[0],
+                    "name": item[1],
+                    "oneItemCost": item[2],
+                    "quantity": item_in_basket[1],
+                    "amount": item_in_basket[2]
                 })
             resp = {
                 "id": basket[0],
                 "idInShop": basket[1],
                 "shopId": basket[2],
+                "consumerId": basket[3],
                 "items": resp_items
             }
             db.update_one_record('Basket', {"consumerId": consumerId}, "consumerId = ".format(consumerId))
