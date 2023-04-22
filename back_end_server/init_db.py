@@ -6,7 +6,7 @@ def create_all_tables():
         #Создание таблицы со всеми покупателями (Consumer)
         "DROP TABLE IF EXISTS Consumer;",
         """
-            CREATE TABLE IF NOT EXISTS Shop (
+            CREATE TABLE IF NOT EXISTS Consumer (
                 id SERIAL PRIMARY KEY NOT NULL)
         """,
 
@@ -40,7 +40,7 @@ def create_all_tables():
         #Создание таблицы Товаров внутри корзины (ItemInBasket)
         "DROP TABLE IF EXISTS ItemInBasket CASCADE;",
         """
-            CREATE TABLE IF NOT EXISTS Item (
+            CREATE TABLE IF NOT EXISTS ItemInBasket (
                 id SERIAL PRIMARY KEY NOT NULL,
                 quantity INT NOT NULL,
                 amount FLOAT4 NOT NULL,
