@@ -3,8 +3,9 @@ from database.db import insert
 
 def create_all_tables():
     queries = [
+
         #Создание таблицы со всеми покупателями (Consumer)
-        "DROP TABLE IF EXISTS Consumer;",
+        "DROP TABLE IF EXISTS Consumer CASCADE;",
         """
             CREATE TABLE IF NOT EXISTS Consumer (
                 id SERIAL PRIMARY KEY NOT NULL,
@@ -13,7 +14,7 @@ def create_all_tables():
         """,
 
         #Создание таблицы со всеми магазинами (Shop)
-        "DROP TABLE IF EXISTS Shop;",
+        "DROP TABLE IF EXISTS Shop CASCADE;",
         """
             CREATE TABLE IF NOT EXISTS Shop (
                 id SERIAL PRIMARY KEY NOT NULL,
@@ -83,7 +84,7 @@ def fill_shops():
     insert("Shop", {"name": "Pyaterochka"})
 
 def fill_consumers_in_shops():
-    insert("ConsumerIdShop", {"loyaltyId": 123, "consumerId": 1, "shopId": 1})
+    insert("ConsumerInShop", {"loyaltyId": 123, "consumerId": 1, "shopId": 1})
 
 if __name__ == "__main__":
     create_all_tables()
