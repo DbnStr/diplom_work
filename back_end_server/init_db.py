@@ -24,7 +24,7 @@ def create_all_tables():
             CREATE TABLE IF NOT EXISTS Basket (
                 id SERIAL PRIMARY KEY NOT NULL,
                 idInShop INT NOT NULL,
-                shopId INT NOT NULL
+                shopId INT NOT NULL,
                 consumerId INT NULL)
         """,
 
