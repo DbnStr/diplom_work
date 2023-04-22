@@ -88,5 +88,6 @@ def fill_consumers_in_shops():
 if __name__ == "__main__":
     create_all_tables()
     fill_consumers()
+    fill_consumers_in_shops()
     fill_shops()
     fill_items()
