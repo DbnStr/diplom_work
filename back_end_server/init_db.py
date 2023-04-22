@@ -27,8 +27,8 @@ def create_all_tables():
                 id SERIAL PRIMARY KEY NOT NULL,
                 loyaltyId INT NOT NULL,
                 consumerId INT NOT NULL REFERENCES Consumer (id),
-                shopId INT NOT NULL REFERENCES Shop(id))
-        """
+                shopId INT NOT NULL REFERENCES Shop (id))
+        """,
 
         #Создание таблицы корзин (Basket)
         "DROP TABLE IF EXISTS Basket CASCADE;",
