@@ -64,6 +64,10 @@ def fill_items():
     for i in items:
         insert("Item", i)
 
+def insert_consumer():
+    insert("Consumer", {})
+
 if __name__ == "__main__":
     create_all_tables()
     fill_items()
+    insert_consumer()
