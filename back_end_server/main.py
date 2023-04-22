@@ -30,7 +30,7 @@ def save_basket_to_database(basket_from_request):
     )[0]
 
     for el in basket_from_request["items"]:
-        db.insert("Item",
+        db.insert("ItemInBasket",
                   {
                       "quantity": el["quantity"],
                       "amount": el["amount"],
@@ -42,27 +42,28 @@ def save_basket_to_database(basket_from_request):
 @app.route("/baskets/<string:basket_id>", methods=['GET'])
 def get_basket(basket_id):
     queries = request.args.to_dict()
-    if queries.get('user_id'):
-        basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basket_id))
-        items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId = {}".format(basket_id))
-
-        resp_items = []
-        for i in items:
-            resp_items.append({
-                "name": i[1],
-                "quantity": i[2],
-                "oneItemCost": i[3],
-                "amount": i[4]
-            })
-        resp = {
-            "id": basket[0],
-            "idInShop": basket[1],
-            "shopId": basket[2],
-            "items": resp_items
-        }
-        return Response(json.dumps(resp), status=200, mimetype='application/json')
-    else:
-        print("No user_id in request")
+    #Переделать!!!!
+    # if queries.get('user_id'):
+    #     basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basket_id))
+    #     items = db.execute_select_all_query("SELECT * FROM Item WHERE basketId = {}".format(basket_id))
+    #
+    #     resp_items = []
+    #     for i in items:
+    #         resp_items.append({
+    #             "name": i[1],
+    #             "quantity": i[2],
+    #             "oneItemCost": i[3],
+    #             "amount": i[4]
+    #         })
+    #     resp = {
+    #         "id": basket[0],
+    #         "idInShop": basket[1],
+    #         "shopId": basket[2],
+    #         "items": resp_items
+    #     }
+    #     return Response(json.dumps(resp), status=200, mimetype='application/json')
+    # else:
+    #     print("No user_id in request")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002, host=REMOTE_HOST)
