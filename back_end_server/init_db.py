@@ -37,6 +37,9 @@ def create_all_tables():
             CREATE TABLE IF NOT EXISTS Basket (
                 id SERIAL PRIMARY KEY NOT NULL,
                 idInShop INT NOT NULL,
+                callbackURL VARCHAR(100) NOT NULL,
+                totalAmount FLOAT4 NOT NULL,
+                totalAmountWithDiscounts FLOAT4 NOT NULL,
                 shopId INT NOT NULL REFERENCES Shop (id),
                 consumerId INT NULL REFERENCES Consumer (id))
         """,

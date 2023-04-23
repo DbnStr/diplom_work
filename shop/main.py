@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     items = [Basket_item(1, 100, 1), Basket_item(1, 50, 2)]
-    basket = Basket(1, 1, items)
+    basket = Basket(1, 1, "http://194.87.99.230:5001/baskets/1", items, 150, 150)
 
     r = requests.post(REMOTE_BACK_END_SERVER_URL     + "/baskets", json=basket.toJson())
     response_body = json.JSONDecoder().decode(r.text)

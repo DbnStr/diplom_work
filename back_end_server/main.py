@@ -11,6 +11,7 @@ json_basket = None
 @app.route("/baskets", methods=['POST'])
 def post_new_basket():
     basket_from_shop = json.JSONDecoder().decode(request.json)
+    print(basket_from_shop)
     basket_id = save_basket_to_database(basket_from_shop)
 
     payment_link = REMOTE_ADDRESS + "/baskets/" + str(basket_id)
@@ -25,7 +26,10 @@ def save_basket_to_database(basket_from_request):
         "Basket",
         {
             "idInShop": basket_from_request["idInShop"],
-            "shopId": basket_from_request["shopId"]
+            "callbackURL": basket_from_request["callbackURL"],
+            "totalAmount": basket_from_request["totalAmount"],
+            "totalAmountWithDiscounts": basket_from_request["totalAmountWithDiscounts"],
+            "shopId": basket_from_request["shopId"],
         }
     )[0]
 
@@ -60,8 +64,10 @@ def get_basket(basket_id):
             resp = {
                 "id": basket[0],
                 "idInShop": basket[1],
-                "shopId": basket[2],
-                "consumerId": basket[3],
+                "totalAmount": basket[3],
+                "totalAmountWithDiscounts": basket[4],
+                "shopId": basket[5],
+                "consumerId": basket[6],
                 "items": resp_items
             }
             db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basket[0]))
