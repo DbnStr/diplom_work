@@ -67,8 +67,7 @@ def get_basket(basket_id):
             db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basket[0]))
             return Response(json.dumps(resp), status=200, mimetype='application/json')
         else: print("User with consumerId = {} doesn't exist".format(consumerId))
-    else:
-        print("No user_id in request")
+    else: print("No user_id in request")
 
 def user_exists(consumerId: int):
     return not db.execute_select_one_query("SELECT * FROM Consumer WHERE id = {}".format(consumerId)) is None

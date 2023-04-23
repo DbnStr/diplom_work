@@ -14,11 +14,11 @@ def hello_world():
     items = [Basket_item(1, 100, 1), Basket_item(1, 50, 2)]
     basket = Basket(1, 1, items)
 
-    r = requests.post(REMOTE_URL     + "/baskets", json=basket.toJson())
+    r = requests.post(REMOTE_BACK_END_SERVER_URL     + "/baskets", json=basket.toJson())
     response_body = json.JSONDecoder().decode(r.text)
 
     print(response_body)
     return "<p>Hello, World!</p>"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5001, host=REMOTE_HOST)
