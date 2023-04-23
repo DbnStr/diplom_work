@@ -15,15 +15,22 @@ externalDocs:
   url: http://swagger.io
 servers:
   - url: http://194.87.99.230:5002
+    description: backend server
+  - url: http://194.87.99.230:5001
+    description: shop server
 tags:
-  - name: basket
-    description: Все методы для взаимодействия с корзиной на стороне Back_End_Server
+  - name: backendBasket
+    description: Все методы для взаимодействия с корзиной на стороне Backend Server
+  - name: shopBasket
+    descriptiom: Все методя для взаимодействия с корзиной на стороне Магазина
 paths:
   /baskets:
     post:
       tags:
-        - basket
+        - backendBasket
       summary: Добавить новую корзину
+      servers:
+        - url: http://194.87.99.230:5002
       description: Данный метод используется магазином для добавления новой корзины
       operationId: createBasket
       requestBody:
@@ -45,13 +52,16 @@ paths:
                     type: string
                     format: string
                     example: "194.87.99.230:5002/baskets/1"
+                    
   /baskets/{basketId}:
     get:
       tags:
-        - basket
+        - backendBasket
       summary: Получить содержимое корзины по basketId
+      servers:
+        - url: http://194.87.99.230:5002
       description: Данный метод используется покупателем для получения содержимого корзины
-      operationId: getPetById
+      operationId: getBasket
       parameters:
         - name: basketId
           in: path
@@ -73,7 +83,54 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BasketInResponse'          
+                $ref: '#/components/schemas/BasketInResponseForConsumer'
+  
+  /baskets/{basketIdInShop}:
+    patch:
+      tags:
+        - shopBasket
+      summary: Обновить корзину (это callbackURL)
+      servers:
+        - url: http://194.87.99.230:5002
+      description: Данный метод используется покупателем для получения содержимого корзины
+      operationId: updateBasketInShop
+      parameters:
+        - name: basketIdInShop
+          in: path
+          description: Идентификатор корзины
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Обновление информации о существующей корзине, в частности отправка id пользователя
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                consumerId:
+                  type: integer
+                  format: int64
+                  example: 1
+                loyaltyId:
+                  type: integer
+                  format: int64
+                  example: 223
+                totalAmountWithDiscounts:
+                  type: number
+                  format: float
+                  example: 1000
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                format: string
+                example: "Success"
 
 components:
   schemas:
@@ -88,10 +145,22 @@ components:
           type: integer
           format: int64
           example: 12
+        callbackURL:
+          type: string
+          format: string
+          example: 'http://194.87.99.230:5001/baskets/1'
         items:
           type: array
           items: 
             $ref: '#/components/schemas/itemInBasketRequest'
+        totalAmount:
+          type: number
+          format: float
+          example: 1200
+        totalAmountWithDiscounts:
+          type: number
+          format: float
+          example: 1200
     itemInBasketRequest:
       type: object
       properties:
@@ -107,7 +176,7 @@ components:
           type: integer
           format: int64
           example: 1
-    BasketInResponse:
+    BasketInResponseForConsumer:
       type: object
       properties:
         id:
@@ -125,8 +194,16 @@ components:
         items:
           type: array
           items: 
-            $ref: '#/components/schemas/itemInBasketResponse'
-    itemInBasketResponse:
+            $ref: '#/components/schemas/itemInBasketResponseForConsumer'
+        totalAmount:
+          type: number
+          format: float
+          example: 1200
+        totalAmountWithDiscounts:
+          type: number
+          format: float
+          example: 1200
+    itemInBasketResponseForConsumer:
       type: object
       properties:
         itemId:
