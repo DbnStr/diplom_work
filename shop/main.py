@@ -1,5 +1,5 @@
 import requests
-from flask import Flask
+from flask import Flask, request
 import json
 
 from Constants import *
@@ -19,6 +19,11 @@ def hello_world():
 
     print(response_body)
     return "<p>Hello, World!</p>"
+
+@app.route("/baskets/<string:basketId", methods=['POST'])
+def post_updated_basket(basketId):
+    updated_basket = json.JSONDecoder().decode(request.json)
+    print(updated_basket)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001, host=REMOTE_HOST)
