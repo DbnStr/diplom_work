@@ -20,7 +20,7 @@ def hello_world():
     print(response_body)
     return "<p>Hello, World!</p>"
 
-@app.route("/baskets/<string:basketId>", methods=['POST'])
+@app.route("/baskets/<string:basketId>", methods=['PATCH'])
 def post_updated_basket(basketId):
     updated_basket = json.JSONDecoder().decode(request.json)
     print(updated_basket)
