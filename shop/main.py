@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, request
+from flask import Flask, request, Response
 import json
 
 from Constants import *
@@ -24,6 +24,7 @@ def hello_world():
 def post_updated_basket(basketId):
     updated_basket = json.JSONDecoder().decode(request.json)
     print(updated_basket)
+    return Response(status=200, mimetype='application/json')
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001, host=REMOTE_HOST)

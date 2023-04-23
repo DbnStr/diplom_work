@@ -82,7 +82,7 @@ def send_updated_basket_to_shop(basketId):
     loyaltyId = db.execute_select_one_query("SELECT loyaltyId FROM ConsumerInShop WHERE shopId = {} AND consumerId = {}".format(basketInfo[2], basketInfo[3]))
     r = requests.patch(basketInfo[0], json=json.dumps({
         "consumerId": basketInfo[3],
-        "loyaltyId": loyaltyId,
+        "loyaltyId": loyaltyId[0],
         "totalAmountWithDiscounts": basketInfo[1]
     }))
 
