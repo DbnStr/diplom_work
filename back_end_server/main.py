@@ -80,11 +80,11 @@ def get_basket(basketId):
 def send_updated_basket_to_shop(basketId):
     basketInfo = db.execute_select_one_query("SELECT callbackURL, totalAmountWithDiscounts, shopId, consumerId FROM Basket WHERE id = {}".format(basketId))
     loyaltyId = db.execute_select_one_query("SELECT loyaltyId FROM ConsumerInShop WHERE shopId = {} AND consumerId = {}".format(basketInfo[2], basketInfo[3]))
-    r = requests.patch(basketInfo[0], {
+    r = requests.patch(basketInfo[0], json=json.dumps({
         "consumerId": basketInfo[3],
         "loyaltyId": loyaltyId,
         "totalAmountWithDiscounts": basketInfo[1]
-    })
+    }))
 
 def user_exists(consumerId: int):
     return not db.execute_select_one_query("SELECT * FROM Consumer WHERE id = {}".format(consumerId)) is None
