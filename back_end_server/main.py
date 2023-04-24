@@ -86,7 +86,7 @@ def get_basket_for_consumer(basketId: int):
     }
 
 def apply_discounts_to_basket(basketId, consumerId):
-    totalAmount = db.execute_select_one_query("SELECT totalAmount FROM Basket WHERE id = {}".format(basketId))
+    totalAmount = db.execute_select_one_query("SELECT totalAmount FROM Basket WHERE id = {}".format(basketId))[0]
     db.update_one_record('Basket', {"totalAmountWithDiscounts": totalAmount * 0.9}, "id = {}".format(basketId))
 
 def send_updated_basket_to_shop(basketId):
