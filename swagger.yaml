@@ -21,8 +21,11 @@ servers:
 tags:
   - name: backendBasket
     description: Все методы для взаимодействия с корзиной на стороне Backend Server
+  - name: backendInvoice
+    description: Все методы для взаимодействия со счетом на стороне BackendServer
   - name: shopBasket
-    descriptiom: Все методя для взаимодействия с корзиной на стороне Магазина
+    description: Все методы для взаимодействия с корзиной на стороне Магазина
+    
 paths:
   /baskets:
     post:
@@ -84,6 +87,95 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BasketInResponseForConsumer'
+    patch:
+      tags:
+        - backendBasket
+      summary: Обновить итоговую сумму корзины
+      servers:
+        - url: http://194.87.99.230:5002
+      description: Данный метод используется магазином (Shop) для обновления итоговой стоимости корзины с учетом применных им персонализированных скидок и предложений
+      operationId: updateBasketInShop
+      parameters:
+        - name: basketId
+          in: path
+          description: Идентификатор корзины
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Обновление итоговой суммы
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                totalAmountWithDiscounts:
+                  type: number
+                  format: float
+                  example: 1000
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                format: string
+                example: "Success"
+  
+  /invoices:
+    post:
+      tags:
+        - backendInvoice
+      summary: Добавить новую корзину
+      servers:
+        - url: http://194.87.99.230:5002
+      description: Данный метод используется магазином для добавления новой корзины
+      operationId: createInvoice
+      requestBody:
+        description: Добавление новой корзины
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: float
+                  example: 115
+                paymentMethods:
+                  type: string
+                  format: string
+                  example: "SBP, MIR"
+                expiredDateTime:
+                  type: string
+                  format: date-time
+                  example: "2023-4-23T20:00:20Z"
+                basketId:
+                  type: integer
+                  format: int64
+                  example: 1
+                consumerId:
+                  type: integer
+                  format: int64
+                  example: 1
+                shopId:
+                  type: integer
+                  format: int64
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                format: string
+                example: "Success"
+                
   
   /baskets/{basketIdInShop}:
     patch:
@@ -92,7 +184,7 @@ paths:
       summary: Обновить корзину (это callbackURL)
       servers:
         - url: http://194.87.99.230:5002
-      description: Данный метод используется покупателем для получения содержимого корзины
+      description: Данный метод используется back end server-ом для отправки обновленной корзины в магазин
       operationId: updateBasketInShop
       parameters:
         - name: basketIdInShop
