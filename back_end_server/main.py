@@ -22,6 +22,33 @@ def post_new_basket():
 
     return Response(json.dumps(response_body), status=200, mimetype='application/json')
 
+@app.route("/baskets/<string:basketId>", methods=['GET'])
+def get_basket(basketId):
+    queries = request.args.to_dict()
+    consumerId = int(queries.get('consumerId'))
+    if consumerId != 'None':
+        if user_exists(consumerId):
+            db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basketId))
+            apply_discounts_to_basket(basketId, consumerId)
+
+            basket = get_basket_for_consumer(basketId)
+            send_updated_basket_to_shop(basketId)
+            return Response(json.dumps(basket), status=200, mimetype='application/json')
+        else:
+            print("User with consumerId = {} doesn't exist".format(consumerId))
+            return Response("User with consumerId = {} doesn't exist".format(consumerId), status=400, mimetype='application/json')
+    else:
+        print("No user_id in request")
+        return Response("No user_id in request", status=400, mimetype='application/json')
+
+@app.route("/baskets/<string:basketId>", methods=['PATCH'])
+def update_basket(basketId):
+    if basket_exists(basketId):
+        totalAmountWithDiscounts = json.JSONDecoder().decode(request.json)["totalAmountWithDiscounts"]
+        db.update_one_record("Basket", {"totalAmountWithDiscounts": totalAmountWithDiscounts}, "id = {}".format(basketId))
+        return Response("Success", status=200, mimetype="application/json")
+    else: return Response("Basket with basketId={} doesn't exist", status=400, mimetype="application/json")
+
 def save_basket_to_database(basket_from_request):
     basket_id = db.insert_one_entry_and_return_inserted_id(
         "Basket",
@@ -43,24 +70,6 @@ def save_basket_to_database(basket_from_request):
                       "itemId": el["itemId"]
                   })
     return basket_id
-
-@app.route("/baskets/<string:basketId>", methods=['GET'])
-def get_basket(basketId):
-    queries = request.args.to_dict()
-    consumerId = int(queries.get('consumerId'))
-    if consumerId != 'None':
-        if user_exists(consumerId):
-            db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basketId))
-            basket = get_basket_for_consumer(basketId)
-            apply_discounts_to_basket(basketId, consumerId)
-            send_updated_basket_to_shop(basketId)
-            return Response(json.dumps(basket), status=200, mimetype='application/json')
-        else:
-            print("User with consumerId = {} doesn't exist".format(consumerId))
-            return Response("User with consumerId = {} doesn't exist".format(consumerId), status=400, mimetype='application/json')
-    else:
-        print("No user_id in request")
-        return Response("No user_id in request", status=400, mimetype='application/json')
 
 def get_basket_for_consumer(basketId: int):
     basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basketId))
@@ -100,6 +109,9 @@ def send_updated_basket_to_shop(basketId):
 
 def user_exists(consumerId: int):
     return not db.execute_select_one_query("SELECT * FROM Consumer WHERE id = {}".format(consumerId)) is None
+
+def basket_exists(basketId: int):
+    return not db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basketId)) is None
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002, host=REMOTE_HOST)
