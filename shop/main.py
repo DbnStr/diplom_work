@@ -35,5 +35,19 @@ def post_updated_basket(basketId):
     print(updated_basket)
     return Response(status=200, mimetype='application/json')
 
+@app.route("/sendInvoice")
+def send_invoice():
+    invoice = json.dumps({
+        "amount": 115,
+        "paymentMethods": "SBP, MIR",
+        "expiredDateTime": "2023-05-01 20:00:20",
+        "basketId": 1,
+        "consumerId": 1,
+        "shopId": 1
+    })
+    r = requests.post(urls.get_url_for_posting_invoice(), json=invoice)
+    print(json.JSONDecoder().decode(r.text))
+    return "<p>Success posting Invoice</p>"
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001, host=REMOTE_HOST)

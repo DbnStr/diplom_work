@@ -62,7 +62,21 @@ def create_all_tables():
                 amount FLOAT4 NOT NULL,
                 basketId INT NOT NULL REFERENCES Basket (id),
                 itemId INT NOT NULL REFERENCES Item (id))
-        """]
+        """,
+
+        #Создание таблицы счетов (Invoice)
+        "DROP TABLE IF EXISTS Invoice CASCADE;",
+        """
+            CREATE TABLE IF NOT EXISTS Invoice (
+                id SERIAL PRIMARY KEY NOT NULL,
+                amount FLOAT4 NOT NULL,
+                paymentMethods VARCHAR(100) NOT NULL,
+                expiredDateTime TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+                basketId INT NOT NULL REFERENCES Basket (id),
+                consumerId INT NOT NULL REFERENCES Consumer (id),
+                shopId INT NOT NULL REFERENCES Shop (id))
+        """
+    ]
     execute_many_queries_without_response(queries)
 
 def fill_items():

@@ -13,7 +13,7 @@ json_basket = None
 def post_new_basket():
     basket_from_shop = json.JSONDecoder().decode(request.json)
     print(basket_from_shop)
-    basket_id = save_basket_to_database(basket_from_shop)
+    basket_id = save_basket_into_database(basket_from_shop)
 
     payment_link = REMOTE_ADDRESS + "/baskets/" + str(basket_id)
     response_body = {"paymentLink": payment_link}
@@ -49,7 +49,32 @@ def update_basket(basketId):
         return Response("Success", status=200, mimetype="application/json")
     else: return Response("Basket with basketId={} doesn't exist", status=400, mimetype="application/json")
 
-def save_basket_to_database(basket_from_request):
+@app.route("/invoices", methods=['POST'])
+def post_new_invoice():
+    invoice_from_shop = json.JSONDecoder().decode(request.json)
+    print(invoice_from_shop)
+    invoiceId = save_invoice_into_database(invoice_from_shop)
+
+    print("Success invoice publication with id={}".format(invoiceId))
+
+    response_body = {"invoiceId": invoiceId}
+    return Response(json.dumps(response_body), status=200, mimetype='application/json')
+
+def save_invoice_into_database(invoice_from_request):
+    invoice_id = db.insert_one_entry_and_return_inserted_id(
+        "Invoice",
+        {
+            "amount": invoice_from_request["amount"],
+            "paymentMethods": invoice_from_request["paymentMethods"],
+            "expiredDateTime": invoice_from_request["expiredDateTime"],
+            "basketId": invoice_from_request["basketId"],
+            "consumerId": invoice_from_request["consumerId"],
+            "shopId": invoice_from_request["shopId"]
+        }
+    )
+    return invoice_id
+
+def save_basket_into_database(basket_from_request):
     basket_id = db.insert_one_entry_and_return_inserted_id(
         "Basket",
         {

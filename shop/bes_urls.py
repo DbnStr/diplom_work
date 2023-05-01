@@ -9,3 +9,6 @@ class BES_Urls:
 
     def get_url_for_posting_basket(self):
         return "{}/baskets".format(self.back_end_server_url)
+
+    def get_url_for_posting_invoice(self):
+        return "{}/invoices".format(self.back_end_server_url)
