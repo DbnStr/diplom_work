@@ -71,7 +71,7 @@ def save_invoice_into_database(invoice_from_request):
             "consumerId": invoice_from_request["consumerId"],
             "shopId": invoice_from_request["shopId"]
         }
-    )
+    )[0]
     return invoice_id
 
 def save_basket_into_database(basket_from_request):
