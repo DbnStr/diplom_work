@@ -19,13 +19,6 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.gms.vision.Detector.Detections
-import ru.bmstu.mobileapp.models.Basket
-import ru.bmstu.mobileapp.retrofit.Common
-import ru.bmstu.mobileapp.retrofit.RetrofitServices
-
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import ru.bmstu.mobileapp.databinding.ActivityBarcodeBinding
 
 class BarCodeActivity : AppCompatActivity() {

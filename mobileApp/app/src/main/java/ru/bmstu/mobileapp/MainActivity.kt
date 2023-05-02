@@ -23,9 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    lateinit var myService: RetrofitServices
-
-
     private val startForURL = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
@@ -49,25 +46,11 @@ class MainActivity : AppCompatActivity() {
                     as NavHostFragment
         navController = navHostFragment.navController
 
-        myService = Common.retrofitService
-
         val qrCodeButton = findViewById<Button>(R.id.qr_code_button)
         qrCodeButton.setOnClickListener {
             val intent = Intent(this, BarCodeActivity::class.java)
             startForURL.launch(intent)
             startActivity(intent)
         }
-    }
-
-    private fun getBasket() {
-        myService.getBasket(1, 1).enqueue(object : Callback<Basket> {
-            override fun onFailure(call: Call<Basket>, t: Throwable) {
-                Log.d("getBasketHttpRequest", "Failure" + t.toString())
-            }
-
-            override fun onResponse(call: Call<Basket>, response: Response<Basket>) {
-                Log.d("getBasketHttpRequest", "Success " + response.body())
-            }
-        })
     }
 }
