@@ -1,6 +1,8 @@
 package ru.bmstu.mobileapp
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -33,8 +35,6 @@ class BarCodeActivity : AppCompatActivity() {
     private var scannedValue = ""
     private lateinit var binding: ActivityBarcodeBinding
 
-    lateinit var myService: RetrofitServices
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +42,6 @@ class BarCodeActivity : AppCompatActivity() {
         binding = ActivityBarcodeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        myService = Common.retrofitService
 
         if (ContextCompat.checkSelfPermission(
                 this@BarCodeActivity, android.Manifest.permission.CAMERA
@@ -57,18 +55,6 @@ class BarCodeActivity : AppCompatActivity() {
         val aniSlide: Animation =
             AnimationUtils.loadAnimation(this@BarCodeActivity, R.anim.scanner_animation)
         binding.barcodeLine.startAnimation(aniSlide)
-    }
-
-    private fun getBasket() {
-        myService.getBasket(1, 1).enqueue(object : Callback<Basket> {
-            override fun onFailure(call: Call<Basket>, t: Throwable) {
-                Log.d("getBasketHttpRequest", "Failure" + t.toString())
-            }
-
-            override fun onResponse(call: Call<Basket>, response: Response<Basket>) {
-                Log.d("getBasketHttpRequest", "Success " + response.body())
-            }
-        })
     }
 
     private fun setupControls() {
@@ -123,15 +109,12 @@ class BarCodeActivity : AppCompatActivity() {
                     scannedValue = barcodes.valueAt(0).rawValue
                     runOnUiThread {
                         Log.d("BarCode Detection", "Detection: $scannedValue")
-                        if (scannedValue.startsWith(SERVER_HOST_NAME)) {
-                            cameraSource.stop()
-                            getBasket()
-                            finish()
-                        }
+                        cameraSource.stop()
+                        val result = Intent()
+                        result.putExtra("qr_payload", scannedValue)
+                        setResult(Activity.RESULT_OK, result)
+                        finish()
                     }
-                } else
-                {
-
                 }
             }
         })
