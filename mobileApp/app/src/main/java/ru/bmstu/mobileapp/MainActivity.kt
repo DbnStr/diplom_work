@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.registerForActivityResult
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,8 +21,10 @@ import ru.bmstu.mobileapp.retrofit.RetrofitServices
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     lateinit var myService: RetrofitServices
+
 
     private val startForURL = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -39,6 +43,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container)
+                    as NavHostFragment
+        navController = navHostFragment.navController
 
         myService = Common.retrofitService
 
