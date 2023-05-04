@@ -9,19 +9,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import ru.bmstu.mobileapp.R
+import ru.bmstu.mobileapp.SERVER_HOST_NAME
 import ru.bmstu.mobileapp.activities.BarCodeActivity
 
 class WayToGetInvoice : Fragment() {
+
+    private lateinit var navController: NavController
 
     private val startForURL = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             if (data != null) {
-                Log.d("QR-code payload", data.getStringExtra("qr_payload")!!)
+                val qrCodePayload : String = data.getStringExtra("qr_payload")!!
+                Log.d("QR-code payload", qrCodePayload)
+
+                if (qrCodePayload.startsWith(SERVER_HOST_NAME)) {
+                    val bundle = Bundle()
+                    bundle.putString("qrCodePayload", qrCodePayload)
+                    navController.navigate(R.id.action_way_to_get_invoice_to_invoice, bundle)
+                } else {
+                    Toast.makeText(activity, "Некорректный QR-код", Toast.LENGTH_LONG).show()
+                }
             } else {
                 Log.d("QR-code payload", "null payload")
+                Toast.makeText(activity, "Некорректный QR-код", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -37,6 +53,7 @@ class WayToGetInvoice : Fragment() {
             startForURL.launch(intent)
             startActivity(intent)
         }
+        navController = this.findNavController()
         return view
     }
 }
