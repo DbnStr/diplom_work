@@ -1,4 +1,4 @@
-package ru.bmstu.mobileapp
+package ru.bmstu.mobileapp.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -19,6 +19,7 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.gms.vision.Detector.Detections
+import ru.bmstu.mobileapp.R
 import ru.bmstu.mobileapp.databinding.ActivityBarcodeBinding
 
 class BarCodeActivity : AppCompatActivity() {

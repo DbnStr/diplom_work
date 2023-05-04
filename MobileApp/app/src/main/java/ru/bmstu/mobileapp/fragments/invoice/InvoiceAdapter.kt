@@ -1,10 +1,11 @@
-package ru.bmstu.mobileapp
+package ru.bmstu.mobileapp.fragments.invoice
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.bmstu.mobileapp.R
 import ru.bmstu.mobileapp.models.BasketItem
 
 class InvoiceAdapter(private val myDataList: List<BasketItem>) : RecyclerView.Adapter<InvoiceAdapter.ItemViewHolder>() {

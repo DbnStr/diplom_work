@@ -3,14 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/way_to_get_invoice">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="ru.bmstu.mobileapp.InvoiceFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_invoice">
+        android:id="@+id/way_to_get_invoice"
+        android:name="ru.bmstu.mobileapp.fragments.way_to_get_invoice.WayToGetInvoice"
+        android:label="Способ получения счета"
+        tools:layout="@layout/fragment_way_to_get_invoice">
+        <action
+            android:id="@+id/action_way_to_get_invoice_to_invoice"
+            app:destination="@id/invoice" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/invoice"
+        android:name="ru.bmstu.mobileapp.fragments.invoice.InvoiceFragment"
+        android:label="Счёт"
+        tools:layout="@layout/fragment_invoice">
+        <action
+            android:id="@+id/action_invoice_to_choice_payment_method"
+            app:destination="@id/choice_payment_method" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/choice_payment_method"
+        android:name="ru.bmstu.mobileapp.fragments.choice_payment_method.ChoicePaymentMethod"
+        android:label="Выбор способа оплаты"
+        tools:layout="@layout/fragment_choice_payment_method">
+        <action
+            android:id="@+id/action_choice_payment_method_to_success_payment"
+            app:destination="@id/success_payment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/success_payment"
+        android:name="ru.bmstu.mobileapp.fragments.success_payment.SuccessPayment"
+        android:label="Результат оплаты"
+        tools:layout="@layout/fragment_success_payment">
+        <action
+            android:id="@+id/action_success_payment_to_way_to_get_invoice2"
+            app:destination="@id/way_to_get_invoice" />
     </fragment>
 
 </navigation>
