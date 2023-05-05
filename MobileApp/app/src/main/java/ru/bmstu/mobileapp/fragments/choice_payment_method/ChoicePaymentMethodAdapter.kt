@@ -11,7 +11,7 @@ import ru.bmstu.mobileapp.models.PaymentMethod
 class ChoicePaymentMethodAdapter(private val myDataList: List<PaymentMethod>) : RecyclerView.Adapter<ChoicePaymentMethodAdapter.PaymentMethodViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentMethodViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.invoice_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.payment_method, parent, false)
         return PaymentMethodViewHolder(view)
     }
 

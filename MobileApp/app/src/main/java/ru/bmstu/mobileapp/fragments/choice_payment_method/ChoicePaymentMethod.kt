@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.bmstu.mobileapp.R
@@ -34,6 +36,11 @@ class ChoicePaymentMethod : Fragment() {
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = choicePaymentMethodAdapter
+
+        val paymentButton : Button = view.findViewById(R.id.button_pay_invoice)
+        paymentButton.setOnClickListener {
+            findNavController().navigate(R.id.action_choice_payment_method_to_success_payment)
+        }
 
         return view
     }
