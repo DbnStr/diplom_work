@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,7 +40,12 @@ class ChoicePaymentMethod : Fragment() {
 
         val paymentButton : Button = view.findViewById(R.id.button_pay_invoice)
         paymentButton.setOnClickListener {
-            findNavController().navigate(R.id.action_choice_payment_method_to_success_payment)
+            val selectedPaymentMethod : Int = choicePaymentMethodAdapter.getSelectedPaymentMethod()
+            if (selectedPaymentMethod != -1) {
+                findNavController().navigate(R.id.action_choice_payment_method_to_success_payment)
+            } else {
+                Toast.makeText(activity, "Выберите способ оплаты", Toast.LENGTH_LONG).show()
+            }
         }
 
         return view
