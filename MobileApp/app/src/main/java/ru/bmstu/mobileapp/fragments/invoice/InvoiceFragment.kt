@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,6 +93,9 @@ class InvoiceFragment : Fragment() {
                 if (items != null) {
                     Log.d("getBasketHttpRequest", items.toString())
                     data.addAll(items)
+
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = response.body()?.totalAmount.toString()
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = response.body()?.totalAmountWithDiscounts.toString()
                 }
                 invoiceAdapter.notifyDataSetChanged()
             }

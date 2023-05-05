@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="630dp"
         android:orientation="vertical"
 
         app:layout_constraintTop_toTopOf="parent"
@@ -40,14 +40,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Итоговая стоимость без скидок: "/>
+            android:text="Итоговая стоимость: "/>
 
         <TextView
             android:id="@+id/invoice_total_amount"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="20sp"
             android:text="0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="20sp"
+            android:text=" руб."/>
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -63,14 +76,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+
+            android:textSize="20sp"
             android:textStyle="bold"
             android:text="Цена с учетом всех скидок: "/>
 
         <TextView
             android:id="@+id/invoice_total_amount_with_discounts"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="20sp"
             android:text="0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="20sp"
+            android:text=" руб."/>
     </LinearLayout>
 
     <Button
