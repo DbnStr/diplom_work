@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -27,6 +29,7 @@ class InvoiceFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var invoiceAdapter: InvoiceAdapter
     private lateinit var data: MutableList<BasketItem>
+    private lateinit var navController: NavController
 
     lateinit var myService: RetrofitServices
 
@@ -43,6 +46,7 @@ class InvoiceFragment : Fragment() {
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = invoiceAdapter
+        navController = this.findNavController()
 
         myService = Common.retrofitService
 
@@ -55,11 +59,16 @@ class InvoiceFragment : Fragment() {
             }
             val url = URL(qrCodePayload)
             val pathParams = url.path.split("/")
-            val basketId = pathParams[1].toInt()
+            val basketId = pathParams[2].toInt()
 
             getBasket(basketId, USER_ID)
         } else {
             Log.e("Invoice Fragment", "Bundle from previous fragment is null")
+        }
+
+        val paymentButton: Button = view.findViewById(R.id.button_pay_invoice)
+        paymentButton.setOnClickListener {
+            navController.navigate(R.id.action_invoice_to_choice_payment_method)
         }
 
         val sendHttp: Button = view.findViewById(R.id.http_send_button)
@@ -81,6 +90,7 @@ class InvoiceFragment : Fragment() {
                 Log.d("getBasketHttpRequest", "Success " + response.body())
                 val items = response.body()?.items
                 if (items != null) {
+                    Log.d("getBasketHttpRequest", items.toString())
                     data.addAll(items)
                 }
                 invoiceAdapter.notifyDataSetChanged()

@@ -11,23 +11,20 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/invoice_item_name"
+            android:id="@+id/payment_method_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
-            android:id="@+id/invoice_item_one_item_cost"
+            android:id="@+id/payment_method_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:id="@+id/invoice_item_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/invoice_item_total_amount"
+            android:id="@+id/payment_method_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
