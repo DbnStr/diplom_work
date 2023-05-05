@@ -41,7 +41,7 @@
         android:label="Результат оплаты"
         tools:layout="@layout/fragment_success_payment">
         <action
-            android:id="@+id/action_success_payment_to_way_to_get_invoice2"
+            android:id="@+id/action_success_payment_to_way_to_get_invoice"
             app:destination="@id/way_to_get_invoice" />
     </fragment>
 
