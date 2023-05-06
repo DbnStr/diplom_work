@@ -97,6 +97,8 @@ def get_invoice():
     resp = get_invoice_for_consumer(basketId, consumerId)
     print(resp)
 
+    app.config['invoice_came'] = False
+
     return Response(json.dumps(resp), status=200, mimetype='application/json')
 
 def save_invoice_into_database(invoice_from_request):
@@ -156,7 +158,7 @@ def get_invoice_for_consumer(basketId: int, consumerId: int):
         "basketId": basketId,
         "consumerId": consumerId,
         "paymentMethods": invoice[1],
-        "expiredDateTime": invoice[2],
+        "expiredDateTime": invoice[2].isoformat(),
         "items": resp_items,
         "totalAmount": basket[0],
         "totalAmountWithDiscounts": basket[1]

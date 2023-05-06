@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5b314e-bc68-4e5b-b596-9d7cc5e70cc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Invoice.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Item.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/fragments/invoice/InvoiceAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/fragments/invoice/InvoiceAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/fragments/invoice/InvoiceFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/fragments/invoice/InvoiceFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Basket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Basket.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/models/BasketItem.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
