@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 json_basket = None
 
+app.config['invoice_came'] = False
+
 @app.route("/baskets", methods=['POST'])
 def post_new_basket():
     basket_from_shop = json.JSONDecoder().decode(request.json)
@@ -26,6 +28,7 @@ def post_new_basket():
 def get_basket(basketId):
     queries = request.args.to_dict()
     consumerId = int(queries.get('consumerId'))
+
     if consumerId != 'None':
         if user_exists(consumerId):
             db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basketId))
@@ -33,6 +36,10 @@ def get_basket(basketId):
 
             basket = get_basket_for_consumer(basketId)
             send_updated_basket_to_shop(basketId)
+
+            while not app.config['invoice_came']:
+                pass
+
             return Response(json.dumps(basket), status=200, mimetype='application/json')
         else:
             print("User with consumerId = {} doesn't exist".format(consumerId))
@@ -51,6 +58,8 @@ def update_basket(basketId):
 
 @app.route("/invoices", methods=['POST'])
 def post_new_invoice():
+    app.config['invoice_came'] = True
+
     invoice_from_shop = json.JSONDecoder().decode(request.json)
     print(invoice_from_shop)
     invoiceId = save_invoice_into_database(invoice_from_shop)
