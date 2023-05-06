@@ -19,17 +19,17 @@ import retrofit2.Response
 import ru.bmstu.mobileapp.R
 import ru.bmstu.mobileapp.USER_ID
 import ru.bmstu.mobileapp.models.Basket
-import ru.bmstu.mobileapp.models.BasketItem
+import ru.bmstu.mobileapp.models.Invoice
+import ru.bmstu.mobileapp.models.Item
 import ru.bmstu.mobileapp.retrofit.Common
 import ru.bmstu.mobileapp.retrofit.RetrofitServices
 import java.net.URL
-import java.net.URLDecoder
 
 class InvoiceFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var invoiceAdapter: InvoiceAdapter
-    private lateinit var data: MutableList<BasketItem>
+    private lateinit var data: MutableList<Item>
     private lateinit var navController: NavController
 
     lateinit var myService: RetrofitServices
@@ -88,6 +88,28 @@ class InvoiceFragment : Fragment() {
 
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<Basket>, response: Response<Basket>) {
+                Log.d("getBasketHttpRequest", "Success " + response.body())
+                val items = response.body()?.items
+                if (items != null) {
+                    Log.d("getBasketHttpRequest", items.toString())
+                    data.addAll(items)
+
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = response.body()?.totalAmount.toString()
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = response.body()?.totalAmountWithDiscounts.toString()
+                }
+                invoiceAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+
+    private fun getInvoice(basketId: Int, consumerId: Int) {
+        myService.getInvoice(basketId, consumerId).enqueue(object : Callback<Invoice> {
+            override fun onFailure(call: Call<Invoice>, t: Throwable) {
+                Log.d("getBasketHttpRequest", "Failure" + t.toString())
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onResponse(call: Call<Invoice>, response: Response<Invoice>) {
                 Log.d("getBasketHttpRequest", "Success " + response.body())
                 val items = response.body()?.items
                 if (items != null) {

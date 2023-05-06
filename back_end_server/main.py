@@ -22,15 +22,15 @@ def post_new_basket():
 
     print("success payment_link request")
 
-    return Response(json.dumps(response_body), status=200, mimetype='application/json')
+    return Response(json.dumps(response_body), status=201, mimetype='application/json')
 
 @app.route("/baskets/<string:basketId>", methods=['GET'])
 def get_basket(basketId):
     queries = request.args.to_dict()
     consumerId = int(queries.get('consumerId'))
 
-    if consumerId != 'None':
-        if user_exists(consumerId):
+    if consumerId != None:
+        if consumer_exists(consumerId):
             db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basketId))
             apply_discounts_to_basket(basketId, consumerId)
 
@@ -53,9 +53,10 @@ def update_basket(basketId):
     if basket_exists(basketId):
         totalAmountWithDiscounts = json.JSONDecoder().decode(request.json)["totalAmountWithDiscounts"]
         db.update_one_record("Basket", {"totalAmountWithDiscounts": totalAmountWithDiscounts}, "id = {}".format(basketId))
-        return Response("Success", status=200, mimetype="application/json")
+        return Response("Success", status=204, mimetype="application/json")
     else: return Response("Basket with basketId={} doesn't exist", status=400, mimetype="application/json")
 
+# Публикация магазином нового счёта
 @app.route("/invoices", methods=['POST'])
 def post_new_invoice():
     app.config['invoice_came'] = True
@@ -67,7 +68,36 @@ def post_new_invoice():
     print("Success invoice publication with id={}".format(invoiceId))
 
     response_body = {"invoiceId": invoiceId}
-    return Response(json.dumps(response_body), status=200, mimetype='application/json')
+    return Response(json.dumps(response_body), status=201, mimetype='application/json')
+
+# Получение Плательщиком счета для указанной корзины (basketId) и своего идентификатора (ConsumerId)
+@app.route("/invoices", methods=['GET'])
+def get_invoice():
+    queries = request.args.to_dict()
+    consumerId = int(queries.get('consumerId'))
+    basketId = int(queries.get('basketId'))
+
+    if consumerId == None:
+        return Response("Request doesn't contain query parameter consumerId", status=400, mimetype="application/json")
+
+    if basketId == None:
+        return Response("Request doesn't contain query parameter basketId", status=400, mimetype="application/json")
+
+    if not consumer_exists(consumerId):
+        return Response("User with consumerId = {} doesn't exist".format(consumerId), status=400,
+                        mimetype='application/json')
+
+    db.update_one_record('Basket', {"consumerId": consumerId}, "id = {}".format(basketId))
+    apply_discounts_to_basket(basketId, consumerId)
+    send_updated_basket_to_shop(basketId)
+
+    while not app.config['invoice_came']:
+        pass
+
+    resp = get_invoice_for_consumer(basketId, consumerId)
+    print(resp)
+
+    return Response(json.dumps(resp), status=200, mimetype='application/json')
 
 def save_invoice_into_database(invoice_from_request):
     invoice_id = db.insert_one_entry_and_return_inserted_id(
@@ -105,6 +135,33 @@ def save_basket_into_database(basket_from_request):
                   })
     return basket_id
 
+def get_invoice_for_consumer(basketId: int, consumerId: int):
+    basket = db.execute_select_one_query("SELECT totalAmount, totalAmountWithDiscounts FROM Basket WHERE id = {}".format(basketId))
+    items_in_basket = db.execute_select_all_query("SELECT * FROM ItemInBasket WHERE basketId = {}".format(basketId))
+    invoice = db.execute_select_one_query("SELECT id, paymentMethods, expiredDateTime FROM Invoice WHERE consumerId = {} and basketId = {}".format(consumerId, basketId))
+
+    resp_items = []
+    for item_in_basket in items_in_basket:
+        item = db.execute_select_one_query("SELECT * FROM Item WHERE id = {}".format(item_in_basket[4]))
+        resp_items.append({
+            "itemId": item[0],
+            "name": item[1],
+            "oneItemCost": item[2],
+            "quantity": item_in_basket[1],
+            "amount": item_in_basket[2]
+        })
+
+    return {
+        "invoiceId": invoice[0],
+        "basketId": basketId,
+        "consumerId": consumerId,
+        "paymentMethods": invoice[1],
+        "expiredDateTime": invoice[2],
+        "items": resp_items,
+        "totalAmount": basket[0],
+        "totalAmountWithDiscounts": basket[1]
+    }
+
 def get_basket_for_consumer(basketId: int):
     basket = db.execute_select_one_query("SELECT * FROM Basket WHERE id = {}".format(basketId))
     items_in_basket = db.execute_select_all_query("SELECT * FROM ItemInBasket WHERE basketId = {}".format(basketId))
@@ -141,7 +198,7 @@ def send_updated_basket_to_shop(basketId):
         "totalAmountWithDiscounts": basketInfo[1]
     }))
 
-def user_exists(consumerId: int):
+def consumer_exists(consumerId: int):
     return not db.execute_select_one_query("SELECT * FROM Consumer WHERE id = {}".format(consumerId)) is None
 
 def basket_exists(basketId: int):

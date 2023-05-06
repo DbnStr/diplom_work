@@ -1,6 +1,6 @@
 package ru.bmstu.mobileapp.models
 
-data class BasketItem(
+data class Item(
     var itemId: Int? = null,
     var name: String? = null,
     var oneItemCost: String? = null,

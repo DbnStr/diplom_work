@@ -6,5 +6,5 @@ data class Basket(
     var totalAmount: Float? = null,
     var totalAmountWithDiscounts: Float? = null,
     var shopId: Int? = null,
-    var items: ArrayList<BasketItem>? = null
+    var items: ArrayList<Item>? = null
 )

@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.bmstu.mobileapp.R
-import ru.bmstu.mobileapp.models.BasketItem
+import ru.bmstu.mobileapp.models.Item
 
-class InvoiceAdapter(private val myDataList: List<BasketItem>) : RecyclerView.Adapter<InvoiceAdapter.ItemViewHolder>() {
+class InvoiceAdapter(private val myDataList: List<Item>) : RecyclerView.Adapter<InvoiceAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.invoice_item, parent, false)
