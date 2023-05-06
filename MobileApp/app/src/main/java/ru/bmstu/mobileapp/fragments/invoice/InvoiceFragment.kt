@@ -18,7 +18,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.bmstu.mobileapp.R
 import ru.bmstu.mobileapp.USER_ID
-import ru.bmstu.mobileapp.models.Basket
 import ru.bmstu.mobileapp.models.Invoice
 import ru.bmstu.mobileapp.models.Item
 import ru.bmstu.mobileapp.retrofit.Common
@@ -62,7 +61,7 @@ class InvoiceFragment : Fragment() {
             val pathParams = url.path.split("/")
             val basketId = pathParams[2].toInt()
 
-            getBasket(basketId, USER_ID)
+            getInvoice(basketId, USER_ID)
         } else {
             Log.e("Invoice Fragment", "Bundle from previous fragment is null")
         }
@@ -74,32 +73,10 @@ class InvoiceFragment : Fragment() {
 
         val sendHttp: Button = view.findViewById(R.id.http_send_button)
         sendHttp.setOnClickListener {
-            getBasket(1, USER_ID)
+            getInvoice(1, USER_ID)
         }
 
         return view
-    }
-
-    private fun getBasket(basketId: Int, consumerId: Int) {
-        myService.getBasket(basketId, consumerId).enqueue(object : Callback<Basket> {
-            override fun onFailure(call: Call<Basket>, t: Throwable) {
-                Log.d("getBasketHttpRequest", "Failure" + t.toString())
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(call: Call<Basket>, response: Response<Basket>) {
-                Log.d("getBasketHttpRequest", "Success " + response.body())
-                val items = response.body()?.items
-                if (items != null) {
-                    Log.d("getBasketHttpRequest", items.toString())
-                    data.addAll(items)
-
-                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = response.body()?.totalAmount.toString()
-                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = response.body()?.totalAmountWithDiscounts.toString()
-                }
-                invoiceAdapter.notifyDataSetChanged()
-            }
-        })
     }
 
     private fun getInvoice(basketId: Int, consumerId: Int) {
