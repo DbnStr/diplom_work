@@ -71,6 +71,7 @@ class InvoiceFragment : Fragment() {
         paymentButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putFloat("amount", invoice.totalAmountWithDiscounts!!)
+            bundle.putInt("invoiceId", invoice.invoiceId!!)
             navController.navigate(R.id.action_invoice_to_choice_payment_method, bundle)
         }
 

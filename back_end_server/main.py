@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, request, Response
 import json
 
@@ -101,6 +103,28 @@ def get_invoice():
 
     return Response(json.dumps(resp), status=200, mimetype='application/json')
 
+#В данном методе в идеале должна происходить инициация платежа путём обращения в компонент Transaction Processing
+@app.route("/paymentInitiation", methods=['POST'])
+def payment_initiation():
+    queries = request.args.to_dict()
+    invoiceId = int(queries.get('consumerId'))
+
+    if invoiceId == None:
+        return Response("Request doesn't contain query parameter invoiceId", status=400, mimetype="application/json")
+
+    req_body = json.JSONDecoder().decode(request.json)
+    paymentId = db.insert_one_entry_and_return_inserted_id(
+        "Payment",
+        {
+            "paymentMethod": req_body["paymentMethod"],
+            "cardNumber": req_body["cardNumber"],
+            "paymentDateTime": datetime.datetime.now().isoformat(),
+            "invoiceId": invoiceId
+        }
+    )
+
+    return Response(json.dumps({"paymentId": paymentId}, status=201, mimetype='application/json'))
+
 def save_invoice_into_database(invoice_from_request):
     invoice_id = db.insert_one_entry_and_return_inserted_id(
         "Invoice",
@@ -113,7 +137,7 @@ def save_invoice_into_database(invoice_from_request):
             "consumerId": invoice_from_request["consumerId"],
             "shopId": invoice_from_request["shopId"]
         }
-    )[0]
+    )
     return invoice_id
 
 def save_basket_into_database(basket_from_request):
@@ -126,7 +150,7 @@ def save_basket_into_database(basket_from_request):
             "totalAmountWithDiscounts": basket_from_request["totalAmountWithDiscounts"],
             "shopId": basket_from_request["shopId"],
         }
-    )[0]
+    )
 
     for el in basket_from_request["items"]:
         db.insert("ItemInBasket",

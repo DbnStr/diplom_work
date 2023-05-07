@@ -83,7 +83,7 @@ def insert_one_entry_and_return_inserted_id(table_name: str, entry: dict):
         cursor = conn.cursor()
         cursor.execute(query, list(entry.values()))
         conn.commit()
-        return cursor.fetchone()
+        return cursor.fetchone()[0]
     except Exception as e:
         conn.rollback()
         print(e)
