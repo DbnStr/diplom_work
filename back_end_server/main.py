@@ -123,6 +123,8 @@ def payment_initiation():
         }
     )
 
+    print({"paymentId": paymentId})
+
     return Response(json.dumps({"paymentId": paymentId}, status=201, mimetype='application/json'))
 
 def save_invoice_into_database(invoice_from_request):
