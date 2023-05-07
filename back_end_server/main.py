@@ -112,14 +112,13 @@ def payment_initiation():
     if invoiceId == None:
         return Response("Request doesn't contain query parameter invoiceId", status=400, mimetype="application/json")
 
-    print(request.get_data(as_text=True))
-
-    req_body = json.JSONDecoder().decode(request.json)
+    req_body = request.get_json()
+    print(req_body)
     paymentId = db.insert_one_entry_and_return_inserted_id(
         "Payment",
         {
-            "paymentMethod": req_body["paymentMethod"],
-            "cardNumber": req_body["cardNumber"],
+            "paymentMethod": req_body.get("paymentMethod"),
+            "cardNumber": req_body.get("cardNumber"),
             "paymentDateTime": datetime.datetime.now().isoformat(),
             "invoiceId": invoiceId
         }

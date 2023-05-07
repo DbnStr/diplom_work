@@ -11,8 +11,10 @@ interface RetrofitServices {
     @GET("invoices")
     fun getInvoice(@Query("basketId") basketId: Int,
                   @Query("consumerId") consumerId: Int): Call<Invoice>
+
+    @Headers("Content-Type: application/json")
     @POST("paymentInitiation")
     fun paymentInitiation(
-        @Body paymentRequestBody: RequestBody,
+        @Body paymentRequestBody: PaymentRequestBody,
         @Query("invoiceId") invoiceId: Int): Call<PaymentResponseBody>
 }

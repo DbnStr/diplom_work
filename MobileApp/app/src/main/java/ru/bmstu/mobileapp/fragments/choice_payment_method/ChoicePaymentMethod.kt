@@ -69,11 +69,8 @@ class ChoicePaymentMethod : Fragment() {
             if (selectedPaymentMethodIndex != -1) {
                 val selectedPaymentMethod = paymentsMethods[selectedPaymentMethodIndex]
                 val paymentRequestBody = PaymentRequestBody(selectedPaymentMethod.type!!, selectedPaymentMethod.number!!)
-                val gson = Gson()
-                val jsonBody = gson.toJson(paymentRequestBody)
-                val reqBody = RequestBody.create(MediaType.parse("application/json"), jsonBody)
 
-                paymentInitiation(reqBody, invoiceId)
+                paymentInitiation(paymentRequestBody, invoiceId)
             } else {
                 Toast.makeText(activity, "Выберите способ оплаты", Toast.LENGTH_LONG).show()
             }
@@ -82,7 +79,7 @@ class ChoicePaymentMethod : Fragment() {
         return view
     }
 
-    private fun paymentInitiation(paymentRequestBody: RequestBody, invoiceId: Int) {
+    private fun paymentInitiation(paymentRequestBody: PaymentRequestBody, invoiceId: Int) {
         myService.paymentInitiation(paymentRequestBody, invoiceId).enqueue(object : Callback<PaymentResponseBody> {
             override fun onFailure(call: Call<PaymentResponseBody>, t: Throwable) {
                 Log.d("paymentInitiation", "Failure" + t.toString())
