@@ -108,6 +108,7 @@ def save_invoice_into_database(invoice_from_request):
             "amount": invoice_from_request["amount"],
             "paymentMethods": invoice_from_request["paymentMethods"],
             "expiredDateTime": invoice_from_request["expiredDateTime"],
+            "status": "Not paid",
             "basketId": invoice_from_request["basketId"],
             "consumerId": invoice_from_request["consumerId"],
             "shopId": invoice_from_request["shopId"]

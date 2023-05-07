@@ -29,6 +29,7 @@ class InvoiceFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var invoiceAdapter: InvoiceAdapter
     private lateinit var data: MutableList<Item>
+    private lateinit var invoice: Invoice
     private lateinit var navController: NavController
 
     lateinit var myService: RetrofitServices
@@ -68,7 +69,9 @@ class InvoiceFragment : Fragment() {
 
         val paymentButton: Button = view.findViewById(R.id.button_pay_invoice)
         paymentButton.setOnClickListener {
-            navController.navigate(R.id.action_invoice_to_choice_payment_method)
+            val bundle = Bundle()
+            bundle.putFloat("amount", invoice.totalAmountWithDiscounts!!)
+            navController.navigate(R.id.action_invoice_to_choice_payment_method, bundle)
         }
 
         val sendHttp: Button = view.findViewById(R.id.http_send_button)
@@ -91,10 +94,11 @@ class InvoiceFragment : Fragment() {
                 val items = response.body()?.items
                 if (items != null) {
                     Log.d("getBasketHttpRequest", items.toString())
+                    invoice = response.body()!!
                     data.addAll(items)
 
-                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = response.body()?.totalAmount.toString()
-                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = response.body()?.totalAmountWithDiscounts.toString()
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = invoice.totalAmount.toString()
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = invoice.totalAmountWithDiscounts.toString()
                 }
                 invoiceAdapter.notifyDataSetChanged()
             }

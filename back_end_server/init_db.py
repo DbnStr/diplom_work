@@ -72,9 +72,21 @@ def create_all_tables():
                 amount FLOAT4 NOT NULL,
                 paymentMethods VARCHAR(100) NOT NULL,
                 expiredDateTime TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+                status VARCHAR(10) NOT NULL,
                 basketId INT NOT NULL REFERENCES Basket (id),
                 consumerId INT NOT NULL REFERENCES Consumer (id),
                 shopId INT NOT NULL REFERENCES Shop (id))
+        """,
+
+        #Создание таблицы платежей (Payment)
+        "DROP TABLE IF EXISTS Payment CASCADE;",
+        """
+            CREATE TABLE IF NOT EXISTS Payment (
+                id SERIAL PRIMARY KEY NOT NULL,
+                paymentMethod VARCHAR(10) NOT NULL,
+                cardNumber VARCHAR(16) NOT NULL,
+                paymentDateTime TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+                invoiceId INT NOT NULL REFERENCES Invoice (id))
         """
     ]
     execute_many_queries_without_response(queries)
