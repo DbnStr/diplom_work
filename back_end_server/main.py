@@ -126,7 +126,7 @@ def payment_initiation():
 
     print({"paymentId": paymentId})
 
-    return Response(json.dumps({"paymentId": paymentId}, status=201, mimetype='application/json'))
+    return Response(json.dumps({"paymentId": paymentId}), status=201, mimetype='application/json')
 
 def save_invoice_into_database(invoice_from_request):
     invoice_id = db.insert_one_entry_and_return_inserted_id(
