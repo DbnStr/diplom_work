@@ -107,7 +107,7 @@ def get_invoice():
 @app.route("/paymentInitiation", methods=['POST'])
 def payment_initiation():
     queries = request.args.to_dict()
-    invoiceId = int(queries.get('consumerId'))
+    invoiceId = int(queries.get('invoiceId'))
 
     if invoiceId == None:
         return Response("Request doesn't contain query parameter invoiceId", status=400, mimetype="application/json")
