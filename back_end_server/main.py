@@ -112,6 +112,8 @@ def payment_initiation():
     if invoiceId == None:
         return Response("Request doesn't contain query parameter invoiceId", status=400, mimetype="application/json")
 
+    print(request)
+
     req_body = json.JSONDecoder().decode(request.json)
     paymentId = db.insert_one_entry_and_return_inserted_id(
         "Payment",

@@ -1,29 +1,29 @@
 package ru.bmstu.mobileapp.fragments.choice_payment_method
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.bmstu.mobileapp.R
-import ru.bmstu.mobileapp.USER_ID
-import ru.bmstu.mobileapp.models.Invoice
-import ru.bmstu.mobileapp.models.Payment
 import ru.bmstu.mobileapp.models.PaymentMethod
+import ru.bmstu.mobileapp.models.PaymentRequestBody
+import ru.bmstu.mobileapp.models.PaymentResponseBody
 import ru.bmstu.mobileapp.retrofit.Common
 import ru.bmstu.mobileapp.retrofit.RetrofitServices
-import java.net.URL
+
 
 class ChoicePaymentMethod : Fragment() {
 
@@ -65,9 +65,15 @@ class ChoicePaymentMethod : Fragment() {
 
         val paymentButton : Button = view.findViewById(R.id.button_pay_invoice)
         paymentButton.setOnClickListener {
-            val selectedPaymentMethod : Int = choicePaymentMethodAdapter.getSelectedPaymentMethod()
-            if (selectedPaymentMethod != -1) {
-                paymentInitiation(invoiceId)
+            val selectedPaymentMethodIndex : Int = choicePaymentMethodAdapter.getSelectedPaymentMethod()
+            if (selectedPaymentMethodIndex != -1) {
+                val selectedPaymentMethod = paymentsMethods[selectedPaymentMethodIndex]
+                val paymentRequestBody = PaymentRequestBody(selectedPaymentMethod.type!!, selectedPaymentMethod.number!!)
+                val gson = Gson()
+                val jsonBody = gson.toJson(paymentRequestBody)
+                val reqBody = RequestBody.create(MediaType.parse("application/json"), jsonBody)
+
+                paymentInitiation(reqBody, invoiceId)
             } else {
                 Toast.makeText(activity, "Выберите способ оплаты", Toast.LENGTH_LONG).show()
             }
@@ -76,13 +82,13 @@ class ChoicePaymentMethod : Fragment() {
         return view
     }
 
-    private fun paymentInitiation(invoiceId: Int) {
-        myService.paymentInitiation(invoiceId).enqueue(object : Callback<Payment> {
-            override fun onFailure(call: Call<Payment>, t: Throwable) {
+    private fun paymentInitiation(paymentRequestBody: RequestBody, invoiceId: Int) {
+        myService.paymentInitiation(paymentRequestBody, invoiceId).enqueue(object : Callback<PaymentResponseBody> {
+            override fun onFailure(call: Call<PaymentResponseBody>, t: Throwable) {
                 Log.d("paymentInitiation", "Failure" + t.toString())
             }
 
-            override fun onResponse(call: Call<Payment>, response: Response<Payment>) {
+            override fun onResponse(call: Call<PaymentResponseBody>, response: Response<PaymentResponseBody>) {
                 Log.d("getBasketHttpRequest", "Success " + response.body()!!.paymentId)
                 findNavController().navigate(R.id.action_choice_payment_method_to_success_payment)
             }

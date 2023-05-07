@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5b314e-bc68-4e5b-b596-9d7cc5e70cc6" name="Changes" comment="" />
+    <list default="true" id="cd5b314e-bc68-4e5b-b596-9d7cc5e70cc6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/models/PaymentRequestBody.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/fragments/choice_payment_method/ChoicePaymentMethod.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/fragments/choice_payment_method/ChoicePaymentMethod.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/models/Payment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MobileApp/app/src/main/java/ru/bmstu/mobileapp/models/PaymentResponseBody.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Retrofit/RetrofitServices.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../mobileApp/app/src/main/java/ru/bmstu/mobileapp/Retrofit/RetrofitServices.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

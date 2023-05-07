@@ -1,5 +1,5 @@
 package ru.bmstu.mobileapp.models
 
-data class Payment(
+data class PaymentResponseBody(
     var paymentId: Int? = null
 )
