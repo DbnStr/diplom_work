@@ -6,14 +6,20 @@ from Constants import LOCAL_HOST
 app = Flask(__name__)
 app.secret_key = "super secret key"
 
-app.config['items'] = [
-    {"id": 1, "name": "Item 1", "price": 10},
-    {"id": 2, "name": "Item 2", "price": 20},
-    {"id": 3, "name": "Item 3", "price": 30},
-    {"id": 4, "name": "Item 4", "price": 40},
-]
+app.config['items'] = {
+    1: {
+        "id": 1,
+        "name": "Coca cola 1.5l",
+        "cost": 100
+    },
+    2: {
+        "id": 2,
+        "name": "Orbit Mint Gum",
+        "cost": 50
+    }
+}
 
-app.config['cart'] = []
+app.config['cart'] = {}
 
 @app.route("/")
 def index():
@@ -21,23 +27,33 @@ def index():
 
 @app.route("/add_to_cart/<int:item_id>", methods=['GET'])
 def add_to_cart(item_id):
-    for item in app.config['items']:
-        if item["id"] == item_id:
-            app.config['cart'].append(item)
+    items = app.config['items']
+    if item_id in items:
+        cart = app.config['cart']
+        if item_id not in cart:
+            cart[item_id] = 1
+        else: cart[item_id] = cart[item_id] + 1
 
-    print(app.config['cart'])
     return redirect(url_for("index"))
 
 @app.route("/cart", methods=['GET'])
 def cart():
+    cart_items = []
     cart = app.config['cart']
-    total = sum([item["price"] for item in cart])
-    print(cart)
-    return render_template("cart.html", items=cart, total=total)
+    for k in cart.keys():
+        item = app.config['items'][k]
+        item_quantity = cart[k]
+        cart_items.append({
+            "name": item["name"],
+            "total_amount": item["cost"] * item_quantity,
+            "quantity": item_quantity
+        })
+    total = sum([i["total_amount"] for i in cart_items])
+    return render_template("cart.html", items=cart_items, total=total)
 
 @app.route("/clear_cart")
 def clear_cart():
-    app.config['cart'] = []
+    app.config['cart'] = {}
     return redirect(url_for("index"))
 
 @app.route('/payment', methods=['GET'])
