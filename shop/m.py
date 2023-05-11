@@ -36,7 +36,7 @@ def add_to_cart(item_id):
         else:
             cart[item_id] = cart[item_id] + 1
 
-    return Response(status=200)
+    return redirect(url_for("index"))
 
 
 @app.route("/cart", methods=['GET'])
