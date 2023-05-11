@@ -104,7 +104,7 @@ def is_user_scanned():
 
 @app.route("/payment_waiting")
 def payment_waiting():
-    render_template("payment_waiting.html")
+    return render_template("payment_waiting.html")
 
 #
 # def send_invoice():
