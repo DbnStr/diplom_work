@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Оплата прошла успешно</h1>
+    <img src="{{ url_for('static', filename='img/success_payment_logo.png') }}" alt="Оплата прошла успешно">
+    <script>
+      $(document).ready(function() {
+          setInterval(function() {
+              $.get('/is_payment_successful', function(data) {
+                if (data.status == 200) {
+                  window.location.href = '/'
+                }
+              });
+          }, 5000); // делаем запрос каждые 5 секунд
+      });
+    </script>
+</body>
+</html>
