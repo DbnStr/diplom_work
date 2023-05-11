@@ -2,9 +2,19 @@
 <html>
   <head>
     <title>Страница оплаты</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <h1>Отсканируйте QR-код для совершения оплаты</h1>
     <img src="{{ url_for('static', filename='img/qr.png') }}" alt="QR Code">
+    <script>
+          $(document).ready(function() {
+              setInterval(function() {
+                  $.get('/get_data', function(data) {
+                      $('#data').html(data);
+                  });
+              }, 5000); // делаем запрос каждые 5 секунд
+          });
+      </script>
   </body>
 </html>

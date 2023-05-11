@@ -12,4 +12,11 @@ class Basket:
         self.totalAmountWithDiscounts = totalAmountWithDiscounts
 
     def toJson(self):
-        return json.dumps(self.__dict__, default=lambda o: o.__dict__)
+        return json.dumps({
+            "idInShop": self.idInShop,
+            "shopId": self.shopId,
+            "callbackURL": self.callbackURL,
+            "items": self.items,
+            "totalAmount": self.totalAmount,
+            "totalAmountWithDiscounts": self.totalAmountWithDiscounts
+        }, default=lambda o: o.__dict__)

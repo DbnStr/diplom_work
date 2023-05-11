@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request, Response
 import json
 import qrcode
 
@@ -22,6 +22,7 @@ app.config['cart'] = {}
 
 @app.route("/")
 def index():
+    app.config["user_scanned_qr"] = False
     return render_template("index.html", items=app.config['items'])
 
 
@@ -79,12 +80,28 @@ def payment():
 #     }))
 #     return "<p>Hello, World!</p>"
 
-# @app.route("/baskets/<int:basketId>", methods=['PATCH'])
-# def post_updated_basket(basketId):
-#     updated_basket = json.JSONDecoder().decode(request.json)
-#     print(updated_basket)
-#
-#     return Response(status=200, mimetype='application/json')
+@app.route("/baskets/<int:basketId>", methods=['PATCH'])
+def update_basket(basketId):
+    updated_fields = json.JSONDecoder().decode(request.json)
+    basket = app.config['basket_for_posting']
+    basket.consumerId = updated_fields["consumerId"]
+    basket.loyaltyId = updated_fields["loyaltyId"]
+    basket.totalAmountWithDiscounts = updated_fields["totalAmountWithDiscounts"]
+
+    print(basket)
+
+    app.config["user_scanned_qr"] = True
+
+    return Response(status=200, mimetype='application/json')
+
+
+@app.route("/paymentWaiting")
+def payment_waiting():
+    if app.config["user_scanned_qr"]:
+        return render_template("index.html", items=app.config['items'])
+    else:
+        return render_template("payment_waiting.html", items=app.config['items'])
+
 #
 # def send_invoice():
 #     invoice = json.dumps({
