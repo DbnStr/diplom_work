@@ -7,16 +7,5 @@
 <body>
     <h1>Оплата прошла успешно</h1>
     <img src="{{ url_for('static', filename='img/success_payment_logo.png') }}" alt="Оплата прошла успешно">
-    <script>
-      $(document).ready(function() {
-          setInterval(function() {
-              $.get('/is_invoice_paid', function(data) {
-                if (data.status == 200) {
-                  window.location.href = '/payment_success'
-                }
-              });
-          }, 5000); // делаем запрос каждые 5 секунд
-      });
-    </script>
 </body>
 </html>

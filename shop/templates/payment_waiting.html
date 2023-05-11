@@ -7,5 +7,16 @@
 <body>
     <h1>Ожидание оплаты</h1>
     <img src="{{ url_for('static', filename='img/waiting_icon.png') }}" alt="QR Code">
+    <script>
+      $(document).ready(function() {
+          setInterval(function() {
+              $.get('/is_invoice_paid', function(data) {
+                if (data.status == 200) {
+                  window.location.href = '/payment_success'
+                }
+              });
+          }, 5000); // делаем запрос каждые 5 секунд
+      });
+    </script>
 </body>
 </html>
