@@ -1,4 +1,5 @@
 import datetime
+from threading import Thread
 
 from flask import Flask, request, Response
 import json
@@ -126,7 +127,26 @@ def payment_initiation():
 
     print({"paymentId": paymentId})
 
+    thread = Thread(target=send_payment_to_shop(paymentId, invoiceId))
+    thread.start()
+
     return Response(json.dumps({"paymentId": paymentId}), status=201, mimetype='application/json')
+
+
+def send_payment_to_shop(paymentId: int, invoiceId: int):
+    payment_fields = db.execute_select_one_query("SELECT paymentMethod, paymentDateTime FROM Payment WHERE id = {}".format(paymentId))
+    amount = db.execute_select_one_query("SELECT amount FROM Invoice WHERE id = {}".format(invoiceId))[0]
+
+    data = {
+        "invoiceId": invoiceId,
+        "paymentMethod": payment_fields[0],
+        "amount": amount,
+        "paymentDateTime": payment_fields[1]
+    }
+    headers = {'Content-type': 'application/json'}
+
+    requests.post(SHOP_REMOTE_URL + "/payments", json=data, headers=headers)
+
 
 def save_invoice_into_database(invoice_from_request):
     invoice_id = db.insert_one_entry_and_return_inserted_id(

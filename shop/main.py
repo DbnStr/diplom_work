@@ -105,6 +105,14 @@ def is_user_scanned():
         return jsonify(status=404)
 
 
+@app.route("/is_invoice_paid")
+def is_invoice_paid():
+    if app.config['invoice_is_paid']:
+        return jsonify(status=200)
+    else:
+        return jsonify(status=404)
+
+
 @app.route("/payment_waiting")
 def payment_waiting():
     send_invoice()

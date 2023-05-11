@@ -10,9 +10,9 @@
     <script>
       $(document).ready(function() {
           setInterval(function() {
-              $.get('/is_payment_successful', function(data) {
+              $.get('/is_invoice_paid', function(data) {
                 if (data.status == 200) {
-                  window.location.href = '/'
+                  window.location.href = '/payment_success'
                 }
               });
           }, 5000); // делаем запрос каждые 5 секунд
