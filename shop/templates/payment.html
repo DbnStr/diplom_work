@@ -10,7 +10,7 @@
     <script>
           $(document).ready(function() {
               setInterval(function() {
-                  $.get('/get_data', function(data) {
+                  $.get('/paymentWaiting', function(data) {
                       $('#data').html(data);
                   });
               }, 5000); // делаем запрос каждые 5 секунд
