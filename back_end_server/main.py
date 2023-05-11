@@ -141,7 +141,7 @@ def send_payment_to_shop(paymentId: int, invoiceId: int):
         "invoiceId": invoiceId,
         "paymentMethod": payment_fields[0],
         "amount": amount,
-        "paymentDateTime": payment_fields[1]
+        "paymentDateTime": str(payment_fields[1])
     }
     headers = {'Content-type': 'application/json'}
 
