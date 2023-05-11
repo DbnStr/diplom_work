@@ -10,5 +10,6 @@ class Basket:
         self.items = items
         self.totalAmount = totalAmount
         self.totalAmountWithDiscounts = totalAmountWithDiscounts
+
     def toJson(self):
         return json.dumps(self.__dict__, default=lambda o: o.__dict__)

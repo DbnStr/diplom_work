@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cart</title>
+    <title>Корзина</title>
   </head>
   <body>
-    <h1>Cart</h1>
+    <h1>Корзина</h1>
     <ul>
       {% for item in items %}
         <li>
-          {{ item.name }} - {{ item.total_amount }} руб. - {{ item.quantity }}
+          {{ item.name }} - {{ item.amount }} руб. - {{ item.quantity }}
         </li>
       {% endfor %}
     </ul>
     <p>Total: {{ total }} руб.</p>
     <a href="{{ url_for('clear_cart') }}">Отчистить корзину</a>
-    <a href="{{ url_for('payment') }}">Оплатить</a>
+    <a href="{{ url_for('payment') }}">Перейти к оплате</a>
   </body>
 </html>

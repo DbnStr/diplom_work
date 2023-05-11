@@ -1,29 +1,29 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+import requests
+from flask import Flask, render_template, redirect, url_for
+import json
 import qrcode
 
-from Constants import LOCAL_HOST
+import bes_urls
+from models.Basket import Basket
+from models.Basket_item import Basket_item
+from models.Item import Item
+from Constants import LOCAL_HOST, SHOP_ID, REMOTE_HOST
 
 app = Flask(__name__)
+urls = bes_urls.BES_Urls()
 app.secret_key = "super secret key"
 
 app.config['items'] = {
-    1: {
-        "id": 1,
-        "name": "Coca cola 1.5l",
-        "cost": 100
-    },
-    2: {
-        "id": 2,
-        "name": "Orbit Mint Gum",
-        "cost": 50
-    }
+    1: Item(1, "Coca cola 1.5l", 100),
+    2: Item(2, "Orbit Mint Gum", 50)
 }
-
 app.config['cart'] = {}
+
 
 @app.route("/")
 def index():
     return render_template("index.html", items=app.config['items'])
+
 
 @app.route("/add_to_cart/<int:item_id>", methods=['GET'])
 def add_to_cart(item_id):
@@ -32,9 +32,11 @@ def add_to_cart(item_id):
         cart = app.config['cart']
         if item_id not in cart:
             cart[item_id] = 1
-        else: cart[item_id] = cart[item_id] + 1
+        else:
+            cart[item_id] = cart[item_id] + 1
 
     return redirect(url_for("index"))
+
 
 @app.route("/cart", methods=['GET'])
 def cart():
@@ -43,27 +45,70 @@ def cart():
     for k in cart.keys():
         item = app.config['items'][k]
         item_quantity = cart[k]
-        cart_items.append({
-            "name": item["name"],
-            "total_amount": item["cost"] * item_quantity,
-            "quantity": item_quantity
-        })
-    total = sum([i["total_amount"] for i in cart_items])
-    return render_template("cart.html", items=cart_items, total=total)
+        cart_items.append(
+            Basket_item(
+                item_quantity,
+                item.cost * item_quantity,
+                k
+            ))
+    total_amount = sum([i.amount for i in cart_items])
+    app.config["basket_for_posting"] = get_basket_for_posting(cart_items, total_amount)
+    return render_template("cart.html", items=cart_items, total=total_amount)
+
 
 @app.route("/clear_cart")
 def clear_cart():
     app.config['cart'] = {}
     return redirect(url_for("index"))
 
+
 @app.route('/payment', methods=['GET'])
 def payment():
-    data = "http://194.87.99.230:5002/baskets/{}".format(1)
+    basket = app.config["basket_for_posting"]
+    r = requests.post(urls.get_url_for_posting_basket(), json=basket.toJson())
+    response_body = json.JSONDecoder().decode(r.text)
+
+    data = response_body["paymentLink"]
+    generate_qr_code(data)
+    return render_template('payment.html')
+
+# @app.route("/sendUpdatedBasket")
+# def send_updated_basket_with_local_discounts():
+#     r = requests.patch(urls.get_basket_location_url(1), json=json.dumps({
+#         "totalAmountWithDiscounts": 100
+#     }))
+#     return "<p>Hello, World!</p>"
+
+# @app.route("/baskets/<int:basketId>", methods=['PATCH'])
+# def post_updated_basket(basketId):
+#     updated_basket = json.JSONDecoder().decode(request.json)
+#     print(updated_basket)
+#
+#     return Response(status=200, mimetype='application/json')
+#
+# def send_invoice():
+#     invoice = json.dumps({
+#         "amount": 115,
+#         "paymentMethods": "SBP, MIR",
+#         "expiredDateTime": "2023-05-01 20:00:20",
+#         "basketId": 1,
+#         "consumerId": 1,
+#         "shopId": 1
+#     })
+#     r = requests.post(urls.get_url_for_posting_invoice(), json=invoice)
+#     print(json.JSONDecoder().decode(r.text))
+
+
+def generate_qr_code(data: str):
     img = qrcode.make(data)
     img.save('static/img/qr.png')
-    return render_template('payment.html')
+
+
+def get_basket_for_posting(cart_items, total_amount: float):
+    total_amount_with_discounts = total_amount * 0.9
+    basket_for_posting = Basket(1, SHOP_ID, "http://194.87.99.230:5001/baskets/1", cart_items, total_amount, total_amount_with_discounts)
+    return basket_for_posting
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001, host=LOCAL_HOST)
-
+    app.run(debug=True, port=5001, host=REMOTE_HOST)
