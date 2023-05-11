@@ -11,6 +11,8 @@
           $(document).ready(function() {
               setInterval(function() {
                   $.get('/paymentWaiting', function(data) {
+                    console.log(data.status)
+<!--                    window.location.href = '/redirect';-->
                   });
               }, 5000); // делаем запрос каждые 5 секунд
           });

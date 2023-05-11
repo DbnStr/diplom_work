@@ -1,5 +1,7 @@
+from urllib import response
+
 import requests
-from flask import Flask, render_template, redirect, url_for, request, Response
+from flask import Flask, render_template, redirect, url_for, request, Response, jsonify
 import json
 import qrcode
 
@@ -100,6 +102,13 @@ def payment_waiting():
         return redirect(url_for("index"))
     else:
         return Response("user_not_scanned", mimetype="application/json", status=200)
+
+@app.route("/isUserScanned")
+def payment_waiting():
+    if app.config["user_scanned_qr"]:
+        return jsonify(status=200)
+    else:
+        return jsonify(status=404)
 
 #
 # def send_invoice():
