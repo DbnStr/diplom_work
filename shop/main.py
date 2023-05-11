@@ -121,7 +121,7 @@ def payment_waiting():
 
 @app.route("/payment_success")
 def payment_success():
-    return render_template("payment_success")
+    return render_template("payment_success.html")
 
 
 @app.route("/payments", methods=['POST'])
