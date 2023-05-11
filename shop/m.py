@@ -1,3 +1,4 @@
+import datetime
 from urllib import response
 
 import requests
@@ -102,22 +103,25 @@ def is_user_scanned():
     else:
         return jsonify(status=404)
 
+
 @app.route("/payment_waiting")
 def payment_waiting():
+    send_invoice()
     return render_template("payment_waiting.html")
 
-#
-# def send_invoice():
-#     invoice = json.dumps({
-#         "amount": 115,
-#         "paymentMethods": "SBP, MIR",
-#         "expiredDateTime": "2023-05-01 20:00:20",
-#         "basketId": 1,
-#         "consumerId": 1,
-#         "shopId": 1
-#     })
-#     r = requests.post(urls.get_url_for_posting_invoice(), json=invoice)
-#     print(json.JSONDecoder().decode(r.text))
+
+def send_invoice():
+    basket = app.config['basket_for_posting']
+    invoice = json.dumps({
+        "amount": basket.totalAmountWithDiscounts,
+        "paymentMethods": "SBP, MIR",
+        "expiredDateTime": (datetime.datetime.now() + datetime.timedelta(days=10)).isoformat(),
+        "basketId": 1,
+        "consumerId": basket.consumerId,
+        "shopId": SHOP_ID
+    })
+    r = requests.post(urls.get_url_for_posting_invoice(), json=invoice)
+    print(json.JSONDecoder().decode(r.text))
 
 
 def generate_qr_code(data: str):
