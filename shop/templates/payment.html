@@ -10,7 +10,7 @@
     <script>
           $(document).ready(function() {
               setInterval(function() {
-                  $.get('/paymentWaiting', function(data) {
+                  $.get('/isUserScanned', function(data) {
                     console.log(data.status)
 <!--                    window.location.href = '/redirect';-->
                   });
