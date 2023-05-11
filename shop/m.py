@@ -95,15 +95,15 @@ def update_basket(basketId):
 
     return Response(status=200, mimetype='application/json')
 
-@app.route("/isUserScanned")
+@app.route("/is_user_scanned")
 def is_user_scanned():
     if app.config["user_scanned_qr"]:
         return jsonify(status=200)
     else:
         return jsonify(status=404)
 
-@app.route("/paymentWaiting")
-def is_user_scanned():
+@app.route("/payment_waiting")
+def payment_waiting():
     render_template("payment_waiting.html")
 
 #

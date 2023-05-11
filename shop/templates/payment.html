@@ -10,9 +10,9 @@
     <script>
           $(document).ready(function() {
               setInterval(function() {
-                  $.get('/isUserScanned', function(data) {
+                  $.get('/is_user_scanned', function(data) {
                     if (data.status == 200) {
-                      window.location.href = '/paymentWaiting'
+                      window.location.href = '/payment_waiting'
                     }
                   });
               }, 5000); // делаем запрос каждые 5 секунд
