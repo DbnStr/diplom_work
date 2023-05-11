@@ -36,7 +36,7 @@ def add_to_cart(item_id):
         else:
             cart[item_id] = cart[item_id] + 1
 
-    return redirect(url_for("index"))
+    return Response(status=200)
 
 
 @app.route("/cart", methods=['GET'])
@@ -55,7 +55,6 @@ def cart():
     total_amount = sum([i.amount for i in cart_items])
     app.config["basket_for_posting"] = get_basket_for_posting(cart_items, total_amount)
     return render_template("cart.html", items=cart_items, total=total_amount)
-
 
 @app.route("/clear_cart")
 def clear_cart():
@@ -98,9 +97,9 @@ def update_basket(basketId):
 @app.route("/paymentWaiting")
 def payment_waiting():
     if app.config["user_scanned_qr"]:
-        return render_template("index.html", items=app.config['items'])
+        return redirect(url_for("index"))
     else:
-        return render_template("payment_waiting.html", items=app.config['items'])
+        return Response("user_not_scanned", mimetype="application/json", status=200)
 
 #
 # def send_invoice():
