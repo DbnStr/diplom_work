@@ -102,6 +102,10 @@ def is_user_scanned():
     else:
         return jsonify(status=404)
 
+@app.route("/paymentWaiting")
+def is_user_scanned():
+    render_template("payment_waiting.html")
+
 #
 # def send_invoice():
 #     invoice = json.dumps({

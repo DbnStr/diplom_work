@@ -11,8 +11,9 @@
           $(document).ready(function() {
               setInterval(function() {
                   $.get('/isUserScanned', function(data) {
-                    console.log(data.status)
-<!--                    window.location.href = '/redirect';-->
+                    if (data.status == 200) {
+                      window.location.href = '/paymentWaiting'
+                    }
                   });
               }, 5000); // делаем запрос каждые 5 секунд
           });
