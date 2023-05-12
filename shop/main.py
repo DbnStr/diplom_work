@@ -17,8 +17,12 @@ urls = bes_urls.BES_Urls()
 app.secret_key = "super secret key"
 
 app.config['items'] = {
-    1: Item(1, "Coca cola 1.5l", 100),
-    2: Item(2, "Orbit Mint Gum", 50)
+    1: Item(1, "Кефир Домик в деревне 3.2%, 900мл", 95, "kefir.jpg", "mini_kefir.jpg"),
+    2: Item(2, "Evervess Пленительный Апельсин 0,25л", 110, "evervess_plen.jpg", "mini_evervess_plen.jpg"),
+    3: Item(3, "Чай Ahmad Strawberry", 159.99, "ahmad_strawberry.jpg", "mini_ahmad_strawberry.jpg"),
+    4: Item(4, "Chester's Cherry 5%, 450мл", 104.99, "chester_cherry.jpg", "mini_chester_cherry.jpg"),
+    5: Item(5, "Палочки кукурузные Cheetos Сыр, 50г", 46.99, "cheetos_cheese.jpg", "mini_cheetos_cheese.jpg"),
+    6: Item(6, "Шоколад молочный Алёнка, 200г", 219.99, "chocolate_alenka.jpg", "mini_chocolate_alenka.jpg")
 }
 app.config['cart'] = {}
 
@@ -46,10 +50,18 @@ def add_to_cart(item_id):
 @app.route("/cart", methods=['GET'])
 def cart():
     cart_items = []
+    displayed_cart_items = []
     cart = app.config['cart']
     for k in cart.keys():
         item = app.config['items'][k]
         item_quantity = cart[k]
+        displayed_cart_items.append({
+            "name": item.name,
+            "cost": item.cost,
+            "quantity": item_quantity,
+            "amount": item.cost * item_quantity,
+            "miniPictureSRC": item.miniPictureSRC
+        })
         cart_items.append(
             Basket_item(
                 item_quantity,
@@ -58,7 +70,7 @@ def cart():
             ))
     total_amount = sum([i.amount for i in cart_items])
     app.config["basket_for_posting"] = get_basket_for_posting(cart_items, total_amount)
-    return render_template("cart.html", items=cart_items, total=total_amount)
+    return render_template("cart.html", items=displayed_cart_items, total=total_amount)
 
 @app.route("/clear_cart")
 def clear_cart():
@@ -157,4 +169,4 @@ def get_basket_for_posting(cart_items, total_amount: float):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001, host=REMOTE_HOST)
+    app.run(debug=True, port=5001, host=LOCAL_HOST)

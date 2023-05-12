@@ -1,19 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Корзина</title>
-  </head>
-  <body>
-    <h1>Корзина</h1>
-    <ul>
-      {% for item in items %}
-        <li>
-          {{ item.name }} - {{ item.amount }} руб. - {{ item.quantity }}
-        </li>
-      {% endfor %}
-    </ul>
-    <p>Total: {{ total }} руб.</p>
-    <a href="{{ url_for('clear_cart') }}">Отчистить корзину</a>
-    <a href="{{ url_for('payment') }}">Перейти к оплате</a>
-  </body>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic&amp;subset=cyrillic">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css?ver=5.0.3' type='text/css'
+        media='all' />
+    <link rel='stylesheet' id='art_net_theme-material-icons-css'
+        href='https://fonts.googleapis.com/icon?family=Material+Icons&#038;ver=5.0.3' type='text/css' media='all' />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnify.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shop.css') }}">
+</head>
+
+<body>
+    <div id="shop" class="shop_container">
+        <div class="container">
+            <div class="row">
+
+                <main class="col">
+					<div class="shop-cart-total-product mb-5">
+						<div class="shop-cart-title d-none d-md-flex">
+							<h3 class="shop-product-title">Товар</h3>
+							<h3 class="shop-price-title">Цена</h3>
+							<h3 class="shop-quantity-title">Кол-во</h3>
+							<h3 class="shop-total-title mr-4">Итого</h3>
+						</div>
+						<div class="shop-cart-items pb-3">
+							{% for item in items %}
+								<div class="shop-cart-single-item">
+									<button type="button" class="close"><i class="fas fa-times"></i></button>
+									<div class="shop-product-img">
+										<img src="{{ url_for('static', filename='img/items_icons/{}'.format(item.miniPictureSRC))}}" alt="">
+									</div>
+									<h5 class="shop-product-name">{{ item.name }}</h5>
+									<h5 class="shop-product-price">{{ item.cost }}</h5>
+									<div class="shop-number-input">
+										<button class="shop-minus"></button>
+										<input class="quantity" min="1" name="quantity" value="{{ item.quantity }}" type="number">
+										<button class="shop-plus"></button>
+									</div>
+									<h5 class="shop-product-total-price">{{ item.amount }}</h5>
+								</div>
+							{% endfor %}
+						</div>
+	
+						<div class="row text-center text-lg-left">
+							<div class="col-lg-7">
+								<div class="shop-update-shopping text-lg-right">
+									<a href="{{ url_for('index') }}" class="shop-theme-btn shop-br-10">Вернуться в магазин</a>
+									<a href="{{ url_for('payment') }}" class="shop-theme-btn shop-br-10">К оплате</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
 </html>
