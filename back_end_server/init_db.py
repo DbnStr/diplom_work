@@ -94,12 +94,28 @@ def create_all_tables():
 def fill_items():
     items = [
         {
-            "name": "Coca cola 1.5l",
-            "cost": 100
+            "name": "Кефир Домик в деревне 3.2%, 900мл",
+            "cost": 95
         },
         {
-            "name": "Orbit Mint Gum",
-            "cost": 50
+            "name": "Evervess Пленительный Апельсин 0,25л",
+            "cost": 110
+        },
+        {
+            "name": "Чай Ahmad Strawberry",
+            "cost": 159.99
+        },
+        {
+            "name": "Chester's Cherry 5%, 450мл",
+            "cost": 104.99
+        },
+        {
+            "name": "Палочки кукурузные Cheetos Сыр, 50г",
+            "cost": 46.99
+        },
+        {
+            "name": "Шоколад молочный Алёнка, 200г",
+            "cost": 219.99
         },
     ]
 
