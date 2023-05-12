@@ -23,9 +23,9 @@ sudo -u postgres createuser -s root
 
 ### Установка возможности использования русского языка в данных
 
-ALTER DATABASE postgres SET client_encoding TO 'UTF8';
+ALTER DATABASE diplom_work SET client_encoding TO 'UTF8';
 
-ALTER DATABASE postgres SET default_text_search_config TO 'pg_catalog.russian';
+ALTER DATABASE diplom_work SET default_text_search_config TO 'pg_catalog.russian';
 
 ### Создание пользователя, у которого будет бд сервиса, и базы данных сервиса 
 
