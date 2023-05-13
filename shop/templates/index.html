@@ -33,7 +33,7 @@
 											<img src="{{ url_for('static', filename='img/items_icons/{}'.format(item.pictureSRC))}}" alt="">
 										</div>
 										<div class="shop-shop-info">
-											<h5><a href="shop-detail.html">{{item.name}}</a></h5>
+											<h5 class="shop-product-name">{{ item.name }}</h5>
 											<div class="shop-price-rating">
 												<span class="shop-shop-price">{{item.cost}}</span>
 												<a href="{{ url_for('add_to_cart', item_id=item.id) }}"><i class="fas fa-shopping-cart"></i></a>

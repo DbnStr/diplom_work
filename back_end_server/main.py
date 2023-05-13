@@ -21,7 +21,10 @@ def post_new_basket():
     basket_id = save_basket_into_database(basket_from_shop)
 
     payment_link = REMOTE_ADDRESS + "/baskets/" + str(basket_id)
-    response_body = {"paymentLink": payment_link}
+    response_body = {
+        "paymentLink": payment_link,
+        "basketId": basket_id
+    }
 
     print("success payment_link request")
 

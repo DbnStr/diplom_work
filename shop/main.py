@@ -82,8 +82,10 @@ def payment():
     r = requests.post(urls.get_url_for_posting_basket(), json=basket.toJson())
     response_body = json.JSONDecoder().decode(r.text)
 
-    data = response_body["paymentLink"]
-    generate_qr_code(data)
+    payment_link = response_body["paymentLink"]
+    app.config["basket_id"] = response_body["basketId"]
+
+    generate_qr_code(payment_link)
     return render_template('payment.html')
 
 # @app.route("/sendUpdatedBasket")
@@ -103,7 +105,6 @@ def update_basket(basketId):
 
     print(basket)
 
-    app.config["basket_id"] = basketId
     app.config["user_scanned_qr"] = True
 
     return Response(status=200, mimetype='application/json')
