@@ -1,3 +1,24 @@
+.shop_qr_code_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.shop_payment_waiting_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.shop_payment_success_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .shop_container {
     padding: 50px 0;
     font-size: 16px;
