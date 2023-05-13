@@ -21,6 +21,12 @@ sudo -u postgres createuser -s root
 
 \dt - список таблиц в базе данных
 
+### Установка возможности использования русского языка в данных
+
+ALTER DATABASE diplom_work SET client_encoding TO 'UTF8';
+
+ALTER DATABASE diplom_work SET default_text_search_config TO 'pg_catalog.russian';
+
 ### Создание пользователя, у которого будет бд сервиса, и базы данных сервиса 
 
 psql postgres - Заходим в postgresql под дефолтным пользователем
@@ -39,24 +45,4 @@ create database diplom_work; - создаём базу данных сервис
 
 python3 init_db.py - создание таблица в базе данных, которая была создана в предыдущем пункте
 
-## Структура данных
-
-POST запрос от магазина в back_end_server содержит корзины в формте JSON. Её структура описана ниже.
-
-
-Структура корзины:
-```
-{
- "idInShop": 123, // Идентификатор корзины в магазине
- "shopId": 12, // Идентификатор магазина, публикующего корзину
- "items": [
-   {
-     "name": "Coca Cola", // название позиции
-     "quantity": 12, // Количество товаров этой позиции
-     "oneItemCost": 100, // Стоимость одной единицы товара
-     "amount": 1200
-   }
-   ...
- ]
-}
-```
+python3 main.py - запуск самого сервера
