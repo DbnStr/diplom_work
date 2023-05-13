@@ -89,7 +89,7 @@ class InvoiceFragment : Fragment() {
                 Log.d("getBasketHttpRequest", "Failure" + t.toString())
             }
 
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
             override fun onResponse(call: Call<Invoice>, response: Response<Invoice>) {
                 Log.d("getBasketHttpRequest", "Success " + response.body())
                 val items = response.body()?.items
@@ -98,8 +98,8 @@ class InvoiceFragment : Fragment() {
                     invoice = response.body()!!
                     data.addAll(items)
 
-                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = invoice.totalAmount.toString()
-                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = invoice.totalAmountWithDiscounts.toString()
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount).text = "%.2f".format(invoice.totalAmount)
+                    view!!.findViewById<TextView>(R.id.invoice_total_amount_with_discounts).text = "%.2f".format(invoice.totalAmountWithDiscounts)
                 }
                 invoiceAdapter.notifyDataSetChanged()
             }

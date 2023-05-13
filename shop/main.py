@@ -31,6 +31,9 @@ app.config['cart'] = {}
 def index():
     app.config["user_scanned_qr"] = False
     app.config['invoice_is_paid'] = False
+    app.config['cart'] = {}
+    app.config["basket_for_posting"] = None
+
     return render_template("index.html", items=app.config['items'])
 
 

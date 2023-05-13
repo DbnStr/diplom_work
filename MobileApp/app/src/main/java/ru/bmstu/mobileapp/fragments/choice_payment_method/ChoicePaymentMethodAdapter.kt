@@ -30,10 +30,11 @@ class ChoicePaymentMethodAdapter(private val myDataList: List<PaymentMethod>) : 
         return PaymentMethodViewHolder(view, this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PaymentMethodViewHolder, position: Int) {
         val item = myDataList[position]
         holder.number.text = item.number!!.substring(item.number!!.length - 4, item.number!!.length)
-        holder.amount.text = item.amount.toString()
+        holder.amount.text = "%.2f".format(item.amount)
         holder.radioButton.isChecked = position == selectedPaymentMethod
     }
 
