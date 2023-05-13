@@ -103,6 +103,7 @@ def update_basket(basketId):
 
     print(basket)
 
+    app.config["basket_id"] = basketId
     app.config["user_scanned_qr"] = True
 
     return Response(status=200, mimetype='application/json')
@@ -135,6 +136,7 @@ def payment_success():
     app.config['invoice_is_paid'] = False
     app.config['cart'] = {}
     app.config["basket_for_posting"] = None
+    app.config["basket_id"] = None
     return render_template("payment_success.html")
 
 
@@ -150,7 +152,7 @@ def send_invoice():
         "amount": basket.totalAmountWithDiscounts,
         "paymentMethods": "SBP, MIR",
         "expiredDateTime": (datetime.datetime.now() + datetime.timedelta(days=10)).isoformat(),
-        "basketId": 1,
+        "basketId": app.config["basket_id"],
         "consumerId": basket.consumerId,
         "shopId": SHOP_ID
     }
