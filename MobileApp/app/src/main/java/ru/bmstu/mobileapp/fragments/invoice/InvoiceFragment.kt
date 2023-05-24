@@ -75,11 +75,6 @@ class InvoiceFragment : Fragment() {
             navController.navigate(R.id.action_invoice_to_choice_payment_method, bundle)
         }
 
-        val sendHttp: Button = view.findViewById(R.id.http_send_button)
-        sendHttp.setOnClickListener {
-            getInvoice(1, USER_ID)
-        }
-
         return view
     }
 
