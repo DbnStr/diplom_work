@@ -178,4 +178,4 @@ def get_basket_for_posting(cart_items, total_amount: float):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001, host=LOCAL_HOST)
+    app.run(debug=True, port=5001, host=REMOTE_HOST)
