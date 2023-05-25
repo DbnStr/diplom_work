@@ -2,7 +2,7 @@ import datetime
 from urllib import response
 
 import requests
-from flask import Flask, render_template, redirect, url_for, request, Response, jsonify
+from flask import Flask, flash, render_template, redirect, url_for, request, Response, jsonify
 import json
 import qrcode
 
@@ -78,6 +78,10 @@ def clear_cart():
 
 @app.route('/payment', methods=['GET'])
 def payment():
+    if len(app.config['cart']) == 0:
+        flash('Ошибка: корзина пустая')
+        return redirect(url_for("index"))
+
     basket = app.config["basket_for_posting"]
     r = requests.post(urls.get_url_for_posting_basket(), json=basket.toJson())
     response_body = json.JSONDecoder().decode(r.text)
@@ -174,4 +178,4 @@ def get_basket_for_posting(cart_items, total_amount: float):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001, host=REMOTE_HOST)
+    app.run(debug=True, port=5001, host=LOCAL_HOST)
