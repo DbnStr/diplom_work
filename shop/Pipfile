@@ -8,6 +8,7 @@ flask = "*"
 requests = "*"
 qrcode = "*"
 flask-flash = "*"
+urllib3 = "==1.26.6"
 
 [dev-packages]
 
