@@ -34,16 +34,13 @@
 						<div class="shop-cart-items pb-3">
 							{% for item in items %}
 								<div class="shop-cart-single-item">
-									<button type="button" class="close"><i class="fas fa-times"></i></button>
 									<div class="shop-product-img">
 										<img src="{{ url_for('static', filename='img/items_icons/{}'.format(item.miniPictureSRC))}}" alt="">
 									</div>
 									<h5 class="shop-product-name">{{ item.name }}</h5>
 									<h5 class="shop-product-price">{{ item.cost }}</h5>
 									<div class="shop-number-input">
-										<button class="shop-minus"></button>
-										<input class="quantity" min="1" name="quantity" value="{{ item.quantity }}" type="number">
-										<button class="shop-plus"></button>
+										<h5 class="shop-product-name">{{ item.quantity }}</h5>
 									</div>
 									<h5 class="shop-product-total-price">{{ item.amount }}</h5>
 								</div>
